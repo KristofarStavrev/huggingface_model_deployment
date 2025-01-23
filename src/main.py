@@ -5,7 +5,7 @@ from src.model_utils import ModelHandler
 app = FastAPI()
 
 # Initialize the model handler
-model_handler = ModelHandler("distilbert-base-uncased")
+model_handler = ModelHandler(model_name="distilbert-base-uncased", adapter_name="Krython/lora_fine_tune_experiment")
 
 
 # Define a Pydantic model for input validation
