@@ -4,8 +4,7 @@
 - [X] Upload model to HuggingFace modelhub
 - [X] Add the Lora adapter to the model
 - [ ] Dockerize
-    - Integrate poetry
-    - Integrate pyenv
+    - [X] Integrate poetry
 - [ ] Docker compose
 - [ ] Makefile
 - [ ] CI/CD - GitHub actions free tier

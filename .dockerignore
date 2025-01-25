@@ -1,0 +1,9 @@
+# Exclude unnecessary folders
+.git/
+.gradio/
+notebooks/
+.gitignore
+README.md
+LICENSE
+__pycache__/
+.python-version
