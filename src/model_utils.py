@@ -1,6 +1,6 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from peft import PeftModel, PeftConfig
+from peft import PeftModel
 
 
 class ModelHandler():

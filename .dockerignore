@@ -5,5 +5,5 @@ notebooks/
 .gitignore
 README.md
 LICENSE
-__pycache__/
+__pycache__
 .python-version

@@ -1,16 +1,29 @@
 # Start with the official Python 3.10.12 image
 FROM python:3.10.12-slim
 
+ARG NEW_USER=sentimentapp
+ARG HOME=/home/$NEW_USER
 ARG POETRY_VERSION=2.0.1
 
-# Set the working directory
-WORKDIR /app
+USER root
+
+# Update the system and install curl
+RUN apt update
+RUN apt -y upgrade
+RUN apt install -y curl
+
+# Create new user
+RUN groupadd -r $NEW_USER && useradd -r -g $NEW_USER -m $NEW_USER
+USER $NEW_USER
 
 # Install poetry - doing this first to cache dependencies before the rest of the project
 RUN curl -sSL https://install.python-poetry.org | POETRY_VERSION=$POETRY_VERSION python3 -
 
 # Add Poetry to the PATH (so you can call `poetry` inside the container)
-ENV PATH="/root/.local/bin:${PATH}"
+ENV PATH="$HOME/.local/bin:${PATH}"
+
+# Set the working directory
+WORKDIR /app
 
 # Copy the poetry configuration and lock files into the container
 COPY pyproject.toml poetry.lock /app/
@@ -19,10 +32,10 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry install
 
 # Copy the rest of the application code into the container
-COPY src /app/
+COPY src /app/src/
 
-# Expose port
-EXPOSE 80
+# Expose the ports for FastAPI and Gradio
+EXPOSE 8000 7860
 
 # Run the app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "python", "src/main.py"]

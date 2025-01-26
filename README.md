@@ -2,11 +2,12 @@
 
 ## TODO:
 - [X] Upload model to HuggingFace modelhub
-- [X] Add the Lora adapter to the model
-- [ ] Dockerize
+- [X] Productionize and modularize code
+- [X] Dockerize
     - [X] Integrate poetry
-- [ ] Docker compose
-- [ ] Makefile
+    - [ ] Separate the fastAPI backend and gradio frontend services in different containers
+    - [ ] Handle them with Docker compose
+- [X] Makefile
 - [ ] CI/CD - GitHub actions free tier
 - [ ] Kubernetes/Kserve + GPU
 - [ ] Linting
