@@ -16,11 +16,11 @@ stop-all:
 	docker stop $(shell docker ps -q)
 
 # Remove all stopped containers
-remove-all:
+remove-containers:
 	docker rm $(shell docker ps -a -q)
 
 # Remove all images
-clean-all-images:
+remove-images:
 	docker rmi $(shell docker images -q)
 
 # Clean Docker cache (unused images, volumes, networks, etc.)
@@ -28,4 +28,4 @@ clean-cache:
 	docker system prune -f
 
 # Stop all containers, remove all containers, remove all images, and clean cache
-docker-full-clean: stop-all remove-all clean-all-images clean-cache
+docker-full-clean: stop-all remove-containers remove-images clean-cache

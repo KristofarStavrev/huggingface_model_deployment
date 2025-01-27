@@ -7,10 +7,8 @@ ARG POETRY_VERSION=2.0.1
 
 USER root
 
-# Update the system and install curl
-RUN apt update
-RUN apt -y upgrade
-RUN apt install -y curl
+# Install curl
+RUN apt update && apt install -y curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create new user
 RUN groupadd -r $NEW_USER && useradd -r -g $NEW_USER -m $NEW_USER
