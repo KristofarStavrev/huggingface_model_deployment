@@ -3,7 +3,7 @@ import requests
 
 
 class SentimentAnalysisAppUI:
-    def __init__(self, api_url="http://127.0.0.1:8000/predict", server_name="0.0.0.0", server_port=7860, prevent_thread_lock=True):
+    def __init__(self, api_url="http://fastapi:8000/predict", server_name="0.0.0.0", server_port=7860, prevent_thread_lock=True):
         self.api_url = api_url
         self.server_name = server_name
         self.server_port = server_port

@@ -8,6 +8,12 @@ services:
     ports:
       - "8000:8000"
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://fastapi:8000/docs"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
   gradio:
     build:
@@ -15,4 +21,7 @@ services:
       dockerfile: docker/gradio.Dockerfile
     ports:
       - "7860:7860"
+    depends_on:
+      fastapi:
+        condition: service_healthy
     restart: always
