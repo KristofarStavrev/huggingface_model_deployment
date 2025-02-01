@@ -27,13 +27,13 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 
 # Install the dependencies (package-mode already set to false in pyproject.toml)
-RUN poetry install
+RUN poetry install --without ui
 
 # Copy the rest of the application code into the container
-COPY src /app/src/
+COPY src/main.py src/model_utils.py /app/
 
 # Expose the ports for FastAPI and Gradio
-EXPOSE 8000 7860
+EXPOSE 8000
 
 # Run the app
-CMD ["poetry", "run", "python", "src/main.py"]
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

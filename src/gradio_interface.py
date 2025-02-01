@@ -3,10 +3,11 @@ import requests
 
 
 class SentimentAnalysisAppUI:
-    def __init__(self, api_url="http://127.0.0.1:8000/predict", server_name="0.0.0.0", server_port=7860):
+    def __init__(self, api_url="http://fastapi:8000/predict", server_name="0.0.0.0", server_port=7860, prevent_thread_lock=True):
         self.api_url = api_url
         self.server_name = server_name
         self.server_port = server_port
+        self.prevent_thread_lock = prevent_thread_lock
 
         # Define Gradio interface
         self.interface = gr.Interface(
@@ -36,10 +37,9 @@ class SentimentAnalysisAppUI:
 
     def launch_gradio(self):
         """Launch Gradio interface."""
-        self.interface.launch(server_name=self.server_name, server_port=self.server_port, prevent_thread_lock=True)
+        self.interface.launch(server_name=self.server_name, server_port=self.server_port, prevent_thread_lock=self.prevent_thread_lock)
 
 
-# Usage example:
 if __name__ == "__main__":
-    app = SentimentAnalysisAppUI()
+    app = SentimentAnalysisAppUI(prevent_thread_lock=False)
     app.launch_gradio()

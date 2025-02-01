@@ -5,8 +5,8 @@
 - [X] Productionize and modularize code
 - [X] Dockerize
     - [X] Integrate poetry
-    - [ ] Separate the fastAPI backend and gradio frontend services in different containers
-    - [ ] Handle them with Docker compose
+    - [X] Separate the fastAPI backend and gradio frontend services in different containers
+    - [X] Handle them with Docker compose
 - [X] Makefile
 - [ ] CI/CD - GitHub actions free tier
 - [ ] Kubernetes/Kserve + GPU

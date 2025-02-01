@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from model_utils import ModelHandler
-from gradio_interface import SentimentAnalysisAppUI
-import uvicorn
 
 app = FastAPI()
 
@@ -36,12 +34,3 @@ def predict(request: PredictionRequest):
         return {"text": request.text, "prediction": prediction}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
-
-
-if __name__ == "__main__":
-    # Start the Gradio interface
-    gradio_app_ui = SentimentAnalysisAppUI()
-    gradio_app_ui.launch_gradio()
-
-    # Start the FastAPI server
-    uvicorn.run(app, host="0.0.0.0", port=8000)
