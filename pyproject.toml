@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "huggingface-model-deployment"
 version = "0.1.0"
-description = ""
-authors = ["kristofar.stavrev <kristofur.stavrev@gmail.com>"]
+description = "LLM movie sentiment analysis with a FastAPI backend with a Gradio UI"
+authors = ["kristofar.stavrev <kristofar.stavrev@gmail.com>"]
 readme = "README.md"
 package-mode = false
 
@@ -12,8 +12,9 @@ torch = "^2.5.0"
 transformers = "^4.46.0"
 peft = "^0.14.0"
 fastapi = {extras = ["standard"], version = "^0.115.6"}
-gradio = "^5.12.0"
 
+[tool.poetry.group.ui.dependencies]
+gradio = "^5.12.0"
 
 [build-system]
 requires = ["poetry-core"]

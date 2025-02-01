@@ -1,3 +1,4 @@
+# Outdated since the project has been migrated to Docker Compose
 DOCKERFILE = docker/Dockerfile
 IMAGE_NAME = llm_movie_sentiment_app
 IMAGE_TAG ?= latest
