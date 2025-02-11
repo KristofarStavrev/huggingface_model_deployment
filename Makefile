@@ -30,3 +30,6 @@ clean-cache:
 
 # Stop all containers, remove all containers, remove all images, and clean cache
 docker-full-clean: stop-all remove-containers remove-images clean-cache
+
+# Stop all containers, remove all containers, remove all images, and clean cache
+docker-partial-clean: remove-images clean-cache
