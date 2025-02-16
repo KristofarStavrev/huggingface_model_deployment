@@ -11,6 +11,9 @@
 - [IN PROGRESS] CI/CD - GitHub actions free tier
     - [X] Always pull latest images
     - [ ] Clean-up old images/containers (maybe even cache)
+    - [ ] Investigate bottlenecks for the build and deploy steps - pushing and pulling images
+    - [ ] Document process for SSH-ing into WSL
+    - [ ] Fix changing public and private IP issues
 - [ ] Reduce image size by using a lighter version of PyTorch 
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
