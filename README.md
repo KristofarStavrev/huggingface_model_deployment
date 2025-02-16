@@ -9,6 +9,9 @@
     - [X] Handle them with Docker compose
 - [X] Makefile
 - [IN PROGRESS] CI/CD - GitHub actions free tier
+    - [X] Always pull latest images
+    - [ ] Clean-up old images/containers (maybe even cache)
+- [ ] Reduce image size by using a lighter version of PyTorch 
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
 - [ ] Mypy  - typechecking
