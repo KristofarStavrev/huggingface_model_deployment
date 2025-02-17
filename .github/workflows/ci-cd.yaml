@@ -62,10 +62,10 @@ jobs:
       # SSH into WSL and deploy
       - name: Deploy to WSL
         run: |
-          ssh -o StrictHostKeyChecking=no {  secrets.USER  }@{  secrets.IP  } -p {  secrets.PORT  } << 'EOF'
-            mkdir -p /home/cicd/deployment && \
-            cp /tmp/docker-compose.yml /home/cicd/deployment/ && \
-            cd /home/cicd/deployment && \
-            docker compose -f docker-compose.yml pull && \
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
+            mkdir -p /home/cicd/deployment &&
+            cp /tmp/docker-compose.yml /home/cicd/deployment/ &&
+            cd /home/cicd/deployment &&
+            docker compose -f docker-compose.yml pull &&
             docker compose -f docker-compose.yml up -d
           EOF

@@ -10,10 +10,10 @@
 - [X] Makefile
 - [IN PROGRESS] CI/CD - GitHub actions free tier
     - [X] Always pull latest images
+    - [X] Document process for SSH-ing into WSL
     - [ ] Clean-up old images/containers (maybe even cache)
-    - [ ] Investigate bottlenecks for the build and deploy steps - pushing and pulling images
-    - [ ] Document process for SSH-ing into WSL
     - [ ] Fix changing public and private IP issues
+    - [ ] Change the deployment so that it does not use docker-hub. It should mimic a real environment as close as possible. So most likely using a self-hosted register and caching enabled.
 - [ ] Reduce image size by using a lighter version of PyTorch 
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
