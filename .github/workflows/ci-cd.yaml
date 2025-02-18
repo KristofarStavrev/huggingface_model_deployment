@@ -35,24 +35,11 @@ jobs:
         run: |
           docker compose -f docker-compose.yml push
 
-      # Upload the docker-compose.yml file as an artifact
-      - name: Upload docker-compose.yml as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-compose
-          path: docker-compose.yml
-
   deploy:
     runs-on: self-hosted # Running on a self-hosted runner
     needs: build  # This job will run after the build job
 
     steps:
-      # Download docker-compose.yml artifact
-      - name: Download docker-compose.yml artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docker-compose
-
       # Set up SSH key from GitHub secrets
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
@@ -63,8 +50,9 @@ jobs:
       - name: Deploy to WSL
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
-            mkdir -p /home/cicd/deployment &&
-            cp /tmp/docker-compose.yml /home/cicd/deployment/ &&
+            wget -O /home/cicd/deployment/docker-compose.yml \
+              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
+
             cd /home/cicd/deployment &&
             docker compose -f docker-compose.yml pull &&
             docker compose -f docker-compose.yml up -d
