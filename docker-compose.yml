@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: docker/fastapi.Dockerfile
-    image: khstavrev/fastapi-app:latest
+    image: "${REGISTRY_URL}/khstavrev/fastapi-app:latest"
     ports:
       - "8000:8000"
     restart: always
@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: docker/gradio.Dockerfile
-    image: khstavrev/gradio-app:latest
+    image: "${REGISTRY_URL}/khstavrev/gradio-app:latest"
     ports:
       - "7860:7860"
     depends_on:

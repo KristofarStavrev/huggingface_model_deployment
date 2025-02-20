@@ -8,12 +8,12 @@
     - [X] Separate the fastAPI backend and gradio frontend services in different containers
     - [X] Handle them with Docker compose
 - [X] Makefile
-- [IN PROGRESS] CI/CD - GitHub actions free tier
-    - [X] Always pull latest images
-    - [X] Document process for SSH-ing into WSL
-    - [ ] Clean-up old images/containers (maybe even cache)
-    - [ ] Fix changing public and private IP issues
-    - [ ] Change the deployment so that it does not use docker-hub. It should mimic a real environment as close as possible. So most likely using a self-hosted register and caching enabled.
+- [IN PROGRESS] CI/CD
+    - [X] Use a self-hosted CI/CD runner
+    - [X] Use a self-hosted docker image repository
+    - [ ] Properly tag docker images
+    - [ ] Create a release on new changes to the main branch
+    - [ ] Clean-up old images/containers on the prod server
 - [ ] Reduce image size by using a lighter version of PyTorch 
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
