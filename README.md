@@ -3,14 +3,15 @@
 ## TODO:
 - [X] Upload model to HuggingFace modelhub
 - [X] Productionize and modularize code
+- [X] Makefile
 - [X] Dockerize
     - [X] Integrate poetry
     - [X] Separate the fastAPI backend and gradio frontend services in different containers
     - [X] Handle them with Docker compose
-- [X] Makefile
 - [IN PROGRESS] CI/CD
     - [X] Use a self-hosted CI/CD runner
     - [X] Use a self-hosted docker image repository
+    - [X] Self-host the deployment environment
     - [ ] Properly tag docker images
     - [ ] Create a release on new changes to the main branch
     - [ ] Clean-up old images/containers on the prod server
