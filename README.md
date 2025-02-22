@@ -30,3 +30,4 @@
 - [ ] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
 - [ ] OPTIONAL: Deploy in AWS - EC2 or ECS
 - [ ] OPTIONAL: Terraform infrastructure
+- [ ] s
