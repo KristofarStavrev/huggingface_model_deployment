@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Trigger on pushing to the main branch or merging into it
 
+  pull_request:
+    branches:
+      - main  # Trigger on pushing to the main branch or merging into it
+
 jobs:
   build:
     runs-on: self-hosted # Running on a self-hosted runner
