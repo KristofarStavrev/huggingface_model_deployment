@@ -8,13 +8,13 @@
     - [X] Integrate poetry
     - [X] Separate the fastAPI backend and gradio frontend services in different containers
     - [X] Handle them with Docker compose
-- [IN PROGRESS] CI/CD
+- [X] CI/CD
     - [X] Use a self-hosted CI/CD runner
     - [X] Use a self-hosted docker image repository
     - [X] Self-host the deployment environment
     - [X] Clean-up old images/containers on the prod server
-    - [ ] Enable caching for the self-hosted image repository
     - [X] Create a release on new changes to the main branch
+    - [FOR FUTURE RESEARCH] Enable image caching in the self-hosted runner
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
 - [ ] Mypy  - typechecking
