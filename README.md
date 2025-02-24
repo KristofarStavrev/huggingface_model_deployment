@@ -12,21 +12,22 @@
     - [X] Use a self-hosted CI/CD runner
     - [X] Use a self-hosted docker image repository
     - [X] Self-host the deployment environment
+    - [ ] Enable caching for the self-hosted image repository
     - [ ] Properly tag docker images
     - [ ] Create a release on new changes to the main branch
     - [ ] Clean-up old images/containers on the prod server
-- [ ] Reduce image size by using a lighter version of PyTorch 
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
 - [ ] Mypy  - typechecking
 - [ ] Linting
 - [ ] Logging
+- [ ] Kafka
 - [ ] Prometheus, Grafana, Loki
 - [ ] Training/Validation/Testing scripts and modularity
 - [ ] Documentation (MkDocs / Sphinx) + Docstrings
 - [ ] Kubernetes/Kserve/Helmchart + GPU
 - [ ] Model tracking, drift, automated retraining
 - [ ] Airflow/Dagster/Argo
-- [ ] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
+- [IN PROGRESS] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
 - [ ] OPTIONAL: Deploy in AWS - EC2 or ECS
-- [ ] OPTIONAL: Terraform infrastructure
+- [ ] OPTIONAL: Terraform/Ansible for infrastructure

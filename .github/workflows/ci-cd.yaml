@@ -14,9 +14,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      # Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      # # Set up Docker Buildx - Commented out because it's not needed anymore on the self-hosted runner
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
       
       # Log in to Self-Hosted Docker Registry
       - name: Log in to Self-Hosted Registry
