@@ -13,8 +13,8 @@
     - [X] Use a self-hosted docker image repository
     - [X] Self-host the deployment environment
     - [X] Clean-up old images/containers on the prod server
-    - [X] Create a release on new changes to the main branch
-    - [FOR FUTURE RESEARCH] Enable image caching in the self-hosted runner
+    - [X] Enable image caching in the self-hosted runner
+    - [X] Create an automated release when a new tag is created
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
 - [ ] Mypy  - typechecking
