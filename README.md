@@ -12,10 +12,9 @@
     - [X] Use a self-hosted CI/CD runner
     - [X] Use a self-hosted docker image repository
     - [X] Self-host the deployment environment
+    - [X] Clean-up old images/containers on the prod server
     - [ ] Enable caching for the self-hosted image repository
-    - [ ] Properly tag docker images
-    - [ ] Create a release on new changes to the main branch
-    - [ ] Clean-up old images/containers on the prod server
+    - [X] Create a release on new changes to the main branch
 - [ ] Pytest / doctest - unit/system tests
 - [ ] Nox/Tox
 - [ ] Mypy  - typechecking

@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Trigger on pushing to the main branch or merging into it
 
+  # push:
+  #   tags:
+  #     - 'v*'  # Trigger on versioned tags
+
 jobs:
   build:
     runs-on: self-hosted # Running on a self-hosted runner
@@ -26,40 +30,66 @@ jobs:
           username: ${{ secrets.LOCAL_IMG_REG_USER }}
           password: ${{ secrets.LOCAL_IMG_REG_PASS }}
 
-      # Build the Docker image (fastapi and gradio)
-      - name: Build Docker Images
+      - name: List Existing Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml build
+          docker images
+          docker context ls
+
+
+  #     # Build the Docker image (fastapi and gradio)
+  #     - name: Build Docker Images
+  #       run: |
+  #         REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml build
       
-      # Push Docker images to Docker Hub
-      - name: Push Docker Images
-        run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml push
+  #     # Push Docker images to Docker Hub
+  #     - name: Push Docker Images
+  #       run: |
+  #         REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml push
 
-  deploy:
-    runs-on: self-hosted # Running on a self-hosted runner
-    needs: build  # This job will run after the build job
+  # deploy:
+  #   runs-on: self-hosted # Running on a self-hosted runner
+  #   needs: build  # This job will run after the build job
 
-    steps:
-      # Set up SSH key from GitHub secrets
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.P_KEY }}
+  #   steps:
+  #     # Set up SSH key from GitHub secrets
+  #     - name: Set up SSH key
+  #       uses: webfactory/ssh-agent@v0.5.3
+  #       with:
+  #         ssh-private-key: ${{ secrets.P_KEY }}
       
-      # SSH into WSL and deploy
-      - name: Deploy to WSL
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
-            # Log in to self-hosted registry
-            echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+  #     # SSH into WSL and deploy
+  #     - name: Deploy to WSL
+  #       run: |
+  #         ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
+  #           # Log in to self-hosted registry
+  #           echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
-            # Fetch the docker-compose.yml file
-            wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
-              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
+  #           # Fetch the docker-compose.yml file
+  #           wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
+  #             https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
 
-            # Pull latest images and restart services
-            cd /home/${{ secrets.USER }}/deployment &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
-          EOF
+  #           # Pull latest images and restart services
+  #           cd /home/${{ secrets.USER }}/deployment &&
+  #           REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
+  #           REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
+  #           docker image prune -f
+  #         EOF
+
+  # release:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy  # Runs after deployment is complete
+  #   if: startsWith(github.ref, 'refs/tags/')  # Only runs if a tag is pushed
+
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+
+  #     - name: Create GitHub Release
+  #       uses: softprops/action-gh-release@v1
+  #       with:
+  #         tag_name: ${{ github.ref_name }}
+  #         name: Release ${{ github.ref_name }}
+  #         body: "Automated release for version ${{ github.ref_name }}."
+  #         draft: false
+  #         prerelease: false
+  #         token: ${{ secrets.GITHUB_TOKEN }}
