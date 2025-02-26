@@ -2,7 +2,7 @@
 
 ## TODO:
 - [X] Upload model to HuggingFace modelhub
-- [X] Productionize and modularize code
+- [X] Productionize and modularize notebook code
 - [X] Makefile
 - [X] Dockerize
     - [X] Integrate poetry
@@ -15,18 +15,24 @@
     - [X] Clean-up old images/containers on the prod server
     - [X] Enable image caching in the self-hosted runner
     - [X] Create an automated release when a new tag is created
-- [ ] Pytest / doctest - unit/system tests
-- [ ] Nox/Tox
-- [ ] Mypy  - typechecking
-- [ ] Linting
-- [ ] Logging
-- [ ] Kafka
-- [ ] Prometheus, Grafana, Loki
-- [ ] Training/Validation/Testing scripts and modularity
-- [ ] Documentation (MkDocs / Sphinx) + Docstrings
+    - [ ] OPTIONAL: Tag docker images with release/commit tag
+- [IN PROGRESS] Tests
+    - [ ] Pytest for unit/integration/e2e/mock tests
+    - [ ] Code coverage 
+    - [ ] Bandit for catching security flaws
+    - [ ] Mypy for typechecking
+    - [ ] flake8 for linting
+    - [ ] OPTIONAL: Use Nox to orchestrate all tests and linting during CI/CD
+- [ ] Logs and messages
+    - [ ] Logging
+    - [ ] Kafka
+    - [ ] Prometheus, Grafana, Loki, Splunk, ELK
 - [ ] Kubernetes/Kserve/Helmchart + GPU
 - [ ] Model tracking, drift, automated retraining
 - [ ] Airflow/Dagster/Argo
+- [ ] Code refactoring
+    - [ ] Training/Validation/Testing scripts and modularity
+    - [ ] Documentation (MkDocs / Sphinx) + Docstrings
 - [IN PROGRESS] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
 - [ ] OPTIONAL: Deploy in AWS - EC2 or ECS
 - [ ] OPTIONAL: Terraform/Ansible for infrastructure
