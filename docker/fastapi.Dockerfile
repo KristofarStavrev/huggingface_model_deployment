@@ -27,7 +27,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 
 # Install the dependencies (package-mode already set to false in pyproject.toml)
-RUN poetry install --without ui
+RUN poetry install --without ui, dev
 
 # Copy the rest of the application code into the container
 COPY src/main.py src/model_utils.py /app/

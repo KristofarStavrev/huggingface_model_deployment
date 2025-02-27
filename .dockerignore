@@ -5,5 +5,25 @@ notebooks/
 .gitignore
 README.md
 LICENSE
-__pycache__
 .python-version
+.github/
+.pytest_cache/
+docs/
+.ipynb_checkpoints/
+__pycache__/
+Makefile
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
