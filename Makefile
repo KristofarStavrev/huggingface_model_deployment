@@ -35,10 +35,10 @@ docker-full-clean: stop-all remove-containers remove-images clean-cache
 docker-partial-clean: remove-images clean-cache
 
 run-pytests:
-	poetry run pytest tests/unit/ -v
+	poetry run pytest tests/ -v
 
 run-pytests-coverage:
-	poetry run pytest --cov=src tests/unit/ -v
+	poetry run pytest --cov=src tests/ -v
 
 run-pytests-coverage-html:
-	poetry run pytest --cov=src --cov-report=html tests/unit/ -v
+	poetry run pytest --cov=src --cov-report=html tests/ -v
