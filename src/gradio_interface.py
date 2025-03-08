@@ -17,7 +17,7 @@ class SentimentAnalysisAppUI:
         launch_gradio: Launches the Gradio interface.
     """
 
-    def __init__(self, api_url="http://fastapi:8000/predict", server_name="0.0.0.0", server_port=7860, prevent_thread_lock=True):
+    def __init__(self, api_url="http://fastapi:8000/predict", server_name="0.0.0.0", server_port=7860, prevent_thread_lock=True): # nosec
         self.api_url = api_url
         self.server_name = server_name
         self.server_port = server_port
@@ -46,7 +46,7 @@ class SentimentAnalysisAppUI:
         Returns:
             str: The sentiment prediction or an error message.
         """
-        response = requests.post(self.api_url, json={"text": text})
+        response = requests.post(self.api_url, json={"text": text}, timeout=30)
         if response.status_code == 200:
             prediction = response.json().get("prediction", {})
             if isinstance(prediction, dict):

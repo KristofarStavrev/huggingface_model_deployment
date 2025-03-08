@@ -19,8 +19,7 @@
 - [IN PROGRESS] Tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
-    - [ ] Add a screenshot of the coverage tests to the repository
-    - [ ] Bandit for catching security flaws
+    - [X] Bandit and pip-audit for catching security flaws
     - [ ] Mypy for typechecking
     - [ ] flake8 for linting
     - [ ] Integrate tests in the CI/CD (Optionally use Nox to orchestrate)
@@ -39,3 +38,7 @@
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
 - [ ] FOR FUTURE IMPROVEMENTS: Model tracking, drift, automated retraining
 - [ ] FOR FUTURE IMPROVEMENTS: Airflow/Dagster/Argo
+
+
+## Tests coverage report
+![Tests coverage report](docs/img/tests-coverage-report.png)

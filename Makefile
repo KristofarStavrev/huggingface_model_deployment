@@ -42,3 +42,6 @@ run-pytests-coverage:
 
 run-pytests-coverage-html:
 	poetry run pytest --cov=src --cov-report=html tests/ -v
+
+run-nox-tests:
+	poetry run nox
