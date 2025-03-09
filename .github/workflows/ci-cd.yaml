@@ -25,7 +25,8 @@ jobs:
 
   build:
     runs-on: self-hosted # Running on a self-hosted runner
-    
+    needs: test  # This job will run after the test job
+
     steps:
       # Checkout the repository
       - name: Checkout Code
