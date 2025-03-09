@@ -1,6 +1,5 @@
 import pytest
 from model_utils import ModelHandler
-from transformers import AutoModelForSequenceClassification
 from peft import PeftModel
 
 
@@ -11,7 +10,8 @@ def model_handler():
     and the Krython/lora_fine_tune_experiment adapter.
     """
 
-    return ModelHandler(model_name="distilbert-base-uncased", adapter_name="Krython/lora_fine_tune_experiment")
+    return ModelHandler(model_name="distilbert-base-uncased",
+                        adapter_name="Krython/lora_fine_tune_experiment")
 
 
 def test_model_initialization(model_handler):

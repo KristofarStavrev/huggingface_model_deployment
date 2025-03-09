@@ -16,13 +16,15 @@
     - [X] Enable image caching in the self-hosted runner
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
-- [IN PROGRESS] Tests
+- [IN PROGRESS] Code styling, linting, security and tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
     - [X] Bandit and pip-audit for catching security flaws
-    - [ ] Mypy for typechecking
-    - [ ] flake8 for linting
-    - [ ] Integrate tests in the CI/CD (Optionally use Nox to orchestrate)
+    - [X] Mypy for typechecking
+    - [X] ruff for linting
+    - [X] Integrate tests in the CI/CD (Optionally use Nox to orchestrate)
+    - [ ] FOR FUTURE IMPROVEMENTS: More strict code styling and introduce pre-commit hooks
+    - [ ] FOR FUTURE IMPROVEMENTS: Stub files that mypy can use for the custom modules (model_utils.py)
 - [ ] Logs and messages
     - [ ] Logging
     - [ ] Kafka

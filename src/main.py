@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from model_utils import ModelHandler
+from typing import Union
 
 app = FastAPI()
 
 # Initialize the model handler
-model_handler = ModelHandler(model_name="distilbert-base-uncased", adapter_name="Krython/lora_fine_tune_experiment")
+model_handler = ModelHandler(model_name="distilbert-base-uncased",
+                             adapter_name="Krython/lora_fine_tune_experiment")
 
 
 # Define a Pydantic model for input validation
@@ -14,7 +16,7 @@ class PredictionRequest(BaseModel):
 
 
 @app.get("/")
-def root():
+def root() -> dict[str, str]:
     """
     Root endpoint that returns a welcome message.
     """
@@ -23,7 +25,7 @@ def root():
 
 
 @app.post("/predict")
-def predict(request: PredictionRequest):
+def predict(request: PredictionRequest) -> dict[str, Union[str, dict]]:
     """
     Endpoint for sentiment prediction.
     Accepts a text input and returns the prediction.

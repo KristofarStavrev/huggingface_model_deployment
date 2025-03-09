@@ -1,6 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from peft import PeftModel
+from typing import Optional
 
 
 class ModelHandler():
@@ -16,7 +17,7 @@ class ModelHandler():
         predict: Predicts the sentiment of the given text.
     """
 
-    def __init__(self, model_name, adapter_name=None):
+    def __init__(self, model_name: str, adapter_name: Optional[str] = None):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -28,7 +29,7 @@ class ModelHandler():
         self.model.to(self.device)
         self.model.eval()
 
-    def predict(self, text):
+    def predict(self, text: str) -> dict[str, float]:
         """
         Method to predict the sentiment of the given text.
 

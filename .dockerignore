@@ -12,6 +12,7 @@ docs/
 .ipynb_checkpoints/
 __pycache__/
 Makefile
+docs/
 
 # Unit test / coverage reports
 htmlcov/

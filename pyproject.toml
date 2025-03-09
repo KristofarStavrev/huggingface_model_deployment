@@ -23,7 +23,13 @@ pytest-mock = "^3.14.0"
 nox = "^2025.2.9"
 pip-audit = "^2.8.0"
 bandit = "^1.8.3"
+ruff = "^0.9.10"
+mypy = "^1.15.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+disable_error_code = ["import-untyped"]
+ignore_missing_imports = true

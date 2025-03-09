@@ -41,7 +41,9 @@ def test_predict_internal_error(mocker):
     """
     Test the predict endpoint with an internal error with a mocker. It should return a 500 status code.
     """
-    mocker.patch("model_utils.ModelHandler.predict", side_effect=Exception("Mocked error"))
+    mocker.patch("model_utils.ModelHandler.predict",
+                 side_effect=Exception("Mocked error"))
+
     response = client.post("/predict", json={"text": "Test"})
     assert response.status_code == 500
     assert "Prediction error" in response.json()["detail"]
