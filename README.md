@@ -16,7 +16,7 @@
     - [X] Enable image caching in the self-hosted runner
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
-- [IN PROGRESS] Code styling, linting, security and tests
+- [X] Code styling, linting, security and tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
     - [X] Bandit and pip-audit for catching security flaws
