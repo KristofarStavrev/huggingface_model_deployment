@@ -26,9 +26,11 @@
     - [ ] FOR FUTURE IMPROVEMENTS: More strict code styling and introduce pre-commit hooks
     - [ ] FOR FUTURE IMPROVEMENTS: Stub files that mypy can use for the custom modules (model_utils.py)
 - [ ] Logs and messages
-    - [ ] Logging
-    - [ ] Kafka
-    - [ ] Prometheus, Grafana, Loki, Splunk, ELK
+    - [ ] Logging in all src codes
+    - [ ] Loki + Promtail
+    - [ ] Prometheus
+    - [ ] Grafana
+    - [ ] FOR FUTURE IMPROVEMENTS: Kafka
 - [ ] Kubernetes/Kserve/Helmchart + GPU
 - [ ] Code refactoring and finishing touches
     - [ ] Training/Validation/Testing scripts and modularity
@@ -41,6 +43,19 @@
 - [ ] FOR FUTURE IMPROVEMENTS: Model tracking, drift, automated retraining
 - [ ] FOR FUTURE IMPROVEMENTS: Airflow/Dagster/Argo
 
+## What to focus for the logging
+For an LLM, you should log:
+Requests & Responses: Input prompts, model predictions, confidence
+Latency & Performance Metrics: How long inference takes
+Errors & Exceptions: Any failures in model serving, request timeouts.
+User Feedback (if applicable): User ratings or corrections to detect bad responses.
+Token Usage: Number of tokens per request.
+Data Distribution: Track changes in the type of data (distribution) the model is processing. Last 3 points could be useful to detect data/model drift
+
+With Grafana:
+Visualize metrics from Prometheus (LLM response time, API errors).
+Display logs from Loki (structured logs, request details).
+Set alerts (e.g., notify if the model response time is slow)?
 
 ## Tests coverage report
 ![Tests coverage report](docs/img/tests-coverage-report.png)
