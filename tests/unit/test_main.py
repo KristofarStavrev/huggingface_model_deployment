@@ -46,4 +46,4 @@ def test_predict_internal_error(mocker):
 
     response = client.post("/predict", json={"text": "Test"})
     assert response.status_code == 500
-    assert "Prediction error" in response.json()["detail"]
+    assert "Internal server error during prediction." in response.json()["detail"]

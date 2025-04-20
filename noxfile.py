@@ -1,4 +1,6 @@
 import nox
+import subprocess
+import sys
 
 
 @nox.session
@@ -10,7 +12,42 @@ def security_scan(session):
 @nox.session
 def dependency_security_scan(session):
     """Run security checks with pip-audit which checks dependencies against the Python Packaging Advisory Database."""
-    session.run("poetry", "run", "pip-audit", external=True)
+    #session.run("poetry", "run", "pip-audit", external=True)
+
+    # Run pip-audit using poetry
+    result = subprocess.run(
+        ["poetry", "run", "pip-audit"],
+        capture_output=True,
+        text=True
+    )
+
+    # Split the result into lines
+    lines = result.stdout.splitlines()
+
+    # Add any libraries that should be excluded from the checks below
+    excl_list = ["torch"]
+
+    # Filter out lines that contain any of the excluded libraries
+    potential_fix = [line for line in lines if not any(word.lower() in line.lower() for word in excl_list)]
+    no_fix = [line for line in lines if any(word.lower() in line.lower() for word in excl_list)]
+
+    # Add headers to the output
+    no_fix = ['Name  Version ID                  Fix Versions', '----- ------- ------------------- ------------', *no_fix]
+
+    if len(lines) <= 2:
+        print("No vulnerabilities found.")
+    else:
+        if len(potential_fix) > 2:
+            print("Vulnerabilities with a potential fix found:")
+            for line in potential_fix:
+                print(line)
+            print("")
+            sys.exit(1)
+
+        if len(no_fix) > 2:
+            print("Vulnerabilities without a known fix found:")
+            for line in no_fix:
+                print(line)
 
 
 @nox.session

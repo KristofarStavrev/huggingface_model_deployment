@@ -1,5 +1,16 @@
 import gradio as gr
 import requests
+import logging
+import sys
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+
+logger = logging.getLogger(__name__)
 
 
 class SentimentAnalysisAppUI:
@@ -27,6 +38,8 @@ class SentimentAnalysisAppUI:
         self.server_port = server_port
         self.prevent_thread_lock = prevent_thread_lock
 
+        logger.info("Initializing Gradio interface...")
+
         # Define Gradio interface with an improved layout
         with gr.Blocks(css=".gradio-container {max-width: 600px; margin: auto;}") as self.interface:
             gr.Markdown("<h2 style='text-align: center;'>🌟 Sentiment Analysis 🌟</h2>")
@@ -42,6 +55,8 @@ class SentimentAnalysisAppUI:
                                       inputs=self.input_text,
                                       outputs=self.output_text)
 
+        logger.info("Gradio interface initialized.")
+
     def sentiment_analysis(self, text: str) -> str:
         """
         Sends a POST request to the FastAPI endpoint with the input text and returns the sentiment prediction.
@@ -52,6 +67,8 @@ class SentimentAnalysisAppUI:
         Returns:
             str: The sentiment prediction or an error message.
         """
+
+        logger.info(f"Sending request to fastAPI: {text}")
         response = requests.post(self.api_url, json={"text": text}, timeout=30)
         if response.status_code == 200:
             prediction = response.json().get("prediction", {})
@@ -59,13 +76,16 @@ class SentimentAnalysisAppUI:
                 # Extract scores and format them nicely
                 pos = prediction.get("positive", 0) * 100
                 neg = prediction.get("negative", 0) * 100
+                logger.info(f"API request successful, received prediction: {prediction}")
                 return f"### Sentiment Scores:\n- **Positive:** {pos:.2f}%\n- **Negative:** {neg:.2f}%"
             return "Invalid prediction format"
         else:
+            logger.error(f"API request failed: {response.status_code} - {response.text}")
             return f"❌ **Error:** {response.json().get('detail', 'Unknown error')}"
 
     def launch_gradio(self) -> None:
         """Launch Gradio interface."""
+        logger.info("Launching Gradio interface...")
         self.interface.launch(server_name=self.server_name,
                               server_port=self.server_port,
                               prevent_thread_lock=self.prevent_thread_lock)

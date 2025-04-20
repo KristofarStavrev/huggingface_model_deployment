@@ -14,7 +14,7 @@ peft = "^0.14.0"
 fastapi = {extras = ["standard"], version = "^0.115.6"}
 
 [tool.poetry.group.ui.dependencies]
-gradio = "^5.12.0"
+gradio = "^5.24.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
