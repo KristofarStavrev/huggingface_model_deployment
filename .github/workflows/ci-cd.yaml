@@ -77,7 +77,7 @@ jobs:
               https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/promtail/promtail-config.yml
 
             # Create .env file from secrets
-            echo "LOKI_URL=${{ secrets.LOKI_URL }}" > .env
+            echo "LOKI_URL=${{ secrets.LOKI_URL }}" > /home/${{ secrets.USER }}/deployment/.env
 
             # Pull latest images and restart services
             cd /home/${{ secrets.USER }}/deployment &&
