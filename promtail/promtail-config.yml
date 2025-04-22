@@ -1,0 +1,38 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /etc/promtail/positions.yaml
+
+clients:
+  - url: ${LOKI_URL}
+
+scrape_configs:
+  - job_name: fastapi-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: fastapi
+          __path__: /var/lib/docker/containers/*/*.log
+    pipeline_stages:
+      - docker: {}
+    relabel_configs:
+      - source_labels: [__meta_docker_container_name]
+        regex: /fastapi/
+        action: keep
+
+  - job_name: gradio-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: gradio
+          __path__: /var/lib/docker/containers/*/*.log
+    pipeline_stages:
+      - docker: {}
+    relabel_configs:
+      - source_labels: [__meta_docker_container_name]
+        regex: /gradio/
+        action: keep

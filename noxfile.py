@@ -24,8 +24,8 @@ def dependency_security_scan(session):
     # Split the result into lines
     lines = result.stdout.splitlines()
 
-    # Add any libraries that should be excluded from the checks below
-    excl_list = ["torch"]
+    # Add any keywords that should be excluded from the checks below
+    excl_list = ["GHSA-3749-ghw9-m3mg", "GHSA-887c-mr87-cxwp"]
 
     # Filter out lines that contain any of the excluded libraries
     potential_fix = [line for line in lines if not any(word.lower() in line.lower() for word in excl_list)]

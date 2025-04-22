@@ -32,3 +32,6 @@ docs/_build/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Environment variables
+.env

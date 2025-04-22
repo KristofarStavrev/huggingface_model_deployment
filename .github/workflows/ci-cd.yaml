@@ -71,6 +71,13 @@ jobs:
             # Fetch the docker-compose.yml file
             wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
               https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
+            
+            # Fetch the promtail config file
+            wget -O /home/${{ secrets.USER }}/deployment/promtail/promtail-config.yml \
+              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/promtail/promtail-config.yml
+
+            # Create .env file from secrets
+            echo "LOKI_URL=${{ secrets.LOKI_URL }}" > .env
 
             # Pull latest images and restart services
             cd /home/${{ secrets.USER }}/deployment &&
