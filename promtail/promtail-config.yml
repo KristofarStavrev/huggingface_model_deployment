@@ -9,28 +9,38 @@ clients:
   - url: ${LOKI_URL}
 
 scrape_configs:
-  - job_name: fastapi-logs
+  - job_name: fastapi
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
+        filters:
+          - name: name
+            values: [fastapi]
     relabel_configs:
-      - source_labels: [__meta_docker_container_name]
-        regex: fastapi
-        action: keep
-      - source_labels: [__meta_docker_container_log_path]
-        target_label: __path__
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container_name'
+      - source_labels: ['__meta_docker_container_id']
+        target_label: 'container_id'
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'container_image'
     pipeline_stages:
       - docker: {}
 
-  - job_name: gradio-logs
+  - job_name: gradio
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
+        filters:
+          - name: name
+            values: [gradio]
     relabel_configs:
-      - source_labels: [__meta_docker_container_name]
-        regex: gradio
-        action: keep
-      - source_labels: [__meta_docker_container_log_path]
-        target_label: __path__
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container_name'
+      - source_labels: ['__meta_docker_container_id']
+        target_label: 'container_id'
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'container_image'
     pipeline_stages:
       - docker: {}
