@@ -5,14 +5,19 @@ from typing import Union
 import logging
 import sys
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
-    handlers=[logging.StreamHandler(sys.stdout)]
-)
-
+# Set up the logger
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Create a console handler that sends logs to stdout
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(logging.Formatter('%(asctime)s | %(levelname)s | Custom Log | %(filename)s | %(message)s'))
+
+# Add the handler to the logger
+logger.addHandler(console_handler)
+
+# Prevent propagation to root logger
+logger.propagate = False
 
 app = FastAPI()
 

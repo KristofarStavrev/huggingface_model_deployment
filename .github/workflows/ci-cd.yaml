@@ -82,6 +82,7 @@ jobs:
             # Pull latest images and restart services
             cd /home/${{ secrets.USER }}/deployment &&
             REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml down --remove-orphans &&
             REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
             docker image prune -f
           EOF

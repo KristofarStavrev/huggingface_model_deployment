@@ -22,8 +22,6 @@ scrape_configs:
         target_label: 'container_name'
       - source_labels: ['__meta_docker_container_id']
         target_label: 'container_id'
-      - source_labels: ['__meta_docker_container_image']
-        target_label: 'container_image'
     pipeline_stages:
       - docker: {}
 
@@ -40,7 +38,5 @@ scrape_configs:
         target_label: 'container_name'
       - source_labels: ['__meta_docker_container_id']
         target_label: 'container_id'
-      - source_labels: ['__meta_docker_container_image']
-        target_label: 'container_image'
     pipeline_stages:
       - docker: {}
