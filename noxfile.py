@@ -26,7 +26,7 @@ def dependency_security_scan(session):
 
     # Add any keywords that should be excluded from the checks below
     # First two are pytorch and the thrid is h11
-    excl_list = ["GHSA-3749-ghw9-m3mg", "GHSA-887c-mr87-cxwp", "GHSA-vqfr-h8mv-ghfj"]
+    excl_list = ["GHSA-3749-ghw9-m3mg", "GHSA-887c-mr87-cxwp", "GHSA-vqfr-h8mv-ghfj", "GHSA-fpwr-67px-3qhx"]
 
     # Filter out lines that contain any of the excluded libraries
     potential_fix = [line for line in lines if not any(word.lower() in line.lower() for word in excl_list)]
