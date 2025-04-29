@@ -26,8 +26,8 @@
     - [ ] FOR FUTURE IMPROVEMENTS: More strict code styling and introduce pre-commit hooks
     - [ ] FOR FUTURE IMPROVEMENTS: Stub files that mypy can use for the custom modules (model_utils.py)
 - [ ] Logs and messages
-    - [ ] Logging in all src codes
-    - [ ] Loki + Promtail
+    - [X] Logging in all src codes
+    - [X] Loki + Promtail
     - [ ] Prometheus
     - [ ] Grafana
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
@@ -48,7 +48,6 @@
 For an LLM, you should log:
 Requests & Responses: Input prompts, model predictions, confidence
 Latency & Performance Metrics: How long inference takes
-Errors & Exceptions: Any failures in model serving, request timeouts.
 User Feedback (if applicable): User ratings or corrections to detect bad responses.
 Token Usage: Number of tokens per request.
 Data Distribution: Track changes in the type of data (distribution) the model is processing. Last 3 points could be useful to detect data/model drift

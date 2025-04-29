@@ -20,6 +20,7 @@ logger.addHandler(console_handler)
 logger.propagate = False
 
 app = FastAPI()
+logger.info("FastAPI is starting...")
 
 # Initialize the model handler
 logger.info("Initializing model...")
@@ -30,9 +31,6 @@ model_handler = ModelHandler(model_name="distilbert-base-uncased",
 # Define a Pydantic model for input validation
 class PredictionRequest(BaseModel):
     text: str
-
-
-logging.info("FastAPI is starting...")
 
 
 @app.get("/")
