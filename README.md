@@ -28,7 +28,7 @@
 - [ ] Logs and messages
     - [X] Logging in all src codes
     - [X] Loki + Promtail
-    - [ ] Prometheus
+    - [ ] Prometheus + unit tests in src
     - [ ] Grafana
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
 - [ ] Kubernetes/Kserve/Helmchart + GPU

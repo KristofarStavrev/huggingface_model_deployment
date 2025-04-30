@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: docker/fastapi.Dockerfile
+    env_file:
+      - .env
     container_name: fastapi
     image: "${REGISTRY_URL}/khstavrev/fastapi-app:latest"
     ports:

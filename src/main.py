@@ -1,9 +1,13 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 from model_utils import ModelHandler
 from typing import Union
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from starlette.responses import Response
 import logging
 import sys
+import os
 
 # Set up the logger
 logger = logging.getLogger(__name__)
@@ -22,6 +26,17 @@ logger.propagate = False
 app = FastAPI()
 logger.info("FastAPI is starting...")
 
+# Authentication for the metrics endpoint for Prometheus
+security = HTTPBasic()
+USERNAME = os.getenv("PROMETHEUS_METRICS_USER")
+PASSWORD = os.getenv("PROMETHEUS_METRICS_PASS")
+
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    if credentials.username != USERNAME or credentials.password != PASSWORD:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
 # Initialize the model handler
 logger.info("Initializing model...")
 model_handler = ModelHandler(model_name="distilbert-base-uncased",
@@ -33,6 +48,10 @@ class PredictionRequest(BaseModel):
     text: str
 
 
+# Metric to track the number of requests
+REQUEST_COUNTER = Counter("app_requests_total", "Total number of requests")
+
+
 @app.get("/")
 def root() -> dict[str, str]:
     """
@@ -40,6 +59,7 @@ def root() -> dict[str, str]:
     """
 
     logger.info("Root endpoint accessed")
+    REQUEST_COUNTER.inc()
 
     return {"message": "Welcome to the sentiment analysis API!"}
 
@@ -60,3 +80,13 @@ def predict(request: PredictionRequest) -> dict[str, Union[str, dict]]:
     except Exception:
         logger.error("Prediction error", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal server error during prediction.")
+
+
+@app.get("/metrics")
+def metrics(credentials: HTTPBasicCredentials = Depends(authenticate)):
+    """
+    Endpoint for metrics scraped by prometheus.
+    """
+
+    data = generate_latest()
+    return Response(content=data, media_type=CONTENT_TYPE_LATEST)
