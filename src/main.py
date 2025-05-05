@@ -3,11 +3,12 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 from model_utils import ModelHandler
 from typing import Union
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST, Histogram
 from starlette.responses import Response
 import logging
 import sys
 import os
+import time
 
 # Set up the logger
 logger = logging.getLogger(__name__)
@@ -48,18 +49,46 @@ class PredictionRequest(BaseModel):
     text: str
 
 
-# Metric to track the number of requests
-REQUEST_COUNTER = Counter("app_requests_total", "Total number of requests")
+# Metric for Prometheus
+ROOT_REQUEST = Counter("root_requests_total", "Total number of root requests")
+PREDICT_REQUESTS = Counter('predict_requests_total', 'Total number of POST requests to the /predict endpoint')
+ROOT_DURATION = Histogram('root_duration_seconds', 'Time spent on the / endpoint in seconds')
+PREDICT_SUCCESSES = Counter("predict_success_total", "Total number of successful predictions")
+PREDICT_FAILURES = Counter("predict_failure_total", "Total number of failed predictions")
+PREDICT_INFERENCE_DURATION = Histogram(
+    "predict_inference_duration_seconds",
+    "Time spent performing inference in the /predict endpoint"
+)
+USER_INPUT_WORDS_LENGTH = Histogram(
+    "user_input_word_length_seconds",
+    "Length of user input (in words)"
+)
+
+# Counter for prediction labels
+PREDICTION_LABEL_COUNTER = Counter(
+    "prediction_label_total",
+    "Count of predictions by label",
+    ["label"]
+)
+
+# Histogram for confidence score distribution
+PREDICTION_CONFIDENCE_HISTOGRAM = Histogram(
+    "prediction_confidence",
+    "Confidence scores of predictions",
+    ["label"],  # Separate histogram per class (optional, but insightful)
+    buckets=[i * 0.1 for i in range(11)]  # 0.0 to 1.0 in steps of 0.1
+)
 
 
 @app.get("/")
+@ROOT_DURATION.time()
 def root() -> dict[str, str]:
     """
     Root endpoint that returns a welcome message.
     """
 
     logger.info("Root endpoint accessed")
-    REQUEST_COUNTER.inc()
+    ROOT_REQUEST.inc()
 
     return {"message": "Welcome to the sentiment analysis API!"}
 
@@ -71,14 +100,37 @@ def predict(request: PredictionRequest) -> dict[str, Union[str, dict]]:
     Accepts a text input and returns the prediction.
     """
 
+    PREDICT_REQUESTS.inc()
     logger.info(f"Prediction request received: {request.text}")
 
+    input_length = len(request.text.split())
+    USER_INPUT_WORDS_LENGTH.observe(input_length)
+
+    start_time = time.perf_counter()
+
     try:
-        prediction = model_handler.predict(request.text)
-        logger.info(f"Prediction successful: {prediction}")
+        with PREDICT_INFERENCE_DURATION.time():
+            prediction = model_handler.predict(request.text)
+
+        duration = time.perf_counter() - start_time
+        logger.info(f"Prediction successful in {duration:.4f} seconds: {prediction}")
+
+        PREDICT_SUCCESSES.inc()
+
+        # Extract the label with highest confidence
+        label = "positive" if prediction["positive"] >= prediction["negative"] else "negative"
+        confidence = prediction[label]
+
+        # Update metrics
+        PREDICTION_LABEL_COUNTER.labels(label=label).inc()
+        PREDICTION_CONFIDENCE_HISTOGRAM.labels(label=label).observe(confidence)
+
         return {"text": request.text, "prediction": prediction}
+
     except Exception:
-        logger.error("Prediction error", exc_info=True)
+        duration = time.perf_counter() - start_time
+        logger.error(f"Prediction failed after {duration:.4f} seconds", exc_info=True)
+        PREDICT_FAILURES.inc()
         raise HTTPException(status_code=500, detail="Internal server error during prediction.")
 
 
