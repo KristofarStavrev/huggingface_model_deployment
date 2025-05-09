@@ -3,7 +3,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 from model_utils import ModelHandler
 from typing import Union
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST, Histogram
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST, Histogram, Gauge
 from starlette.responses import Response
 import logging
 import sys
@@ -60,8 +60,9 @@ PREDICT_INFERENCE_DURATION = Histogram(
     "Time spent performing inference in the /predict endpoint"
 )
 USER_INPUT_WORDS_LENGTH = Histogram(
-    "user_input_word_length_seconds",
-    "Length of user input (in words)"
+    "user_input_word_length",
+    "Length of user input (in words)",
+    buckets=[1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
 )
 
 # Counter for prediction labels
@@ -79,6 +80,7 @@ PREDICTION_CONFIDENCE_HISTOGRAM = Histogram(
     buckets=[i * 0.1 for i in range(11)]  # 0.0 to 1.0 in steps of 0.1
 )
 
+LAST_CONFIDENCE = Gauge("last_prediction_confidence", "Confidence of the last prediction")
 
 @app.get("/")
 @ROOT_DURATION.time()
@@ -124,6 +126,7 @@ def predict(request: PredictionRequest) -> dict[str, Union[str, dict]]:
         # Update metrics
         PREDICTION_LABEL_COUNTER.labels(label=label).inc()
         PREDICTION_CONFIDENCE_HISTOGRAM.labels(label=label).observe(confidence)
+        LAST_CONFIDENCE.set(confidence)
 
         return {"text": request.text, "prediction": prediction}
 
