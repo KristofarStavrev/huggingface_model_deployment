@@ -68,7 +68,7 @@ def test_metrics_endpoint_auth_success(mocker):
     assert b"predict_success_total" in response.content
     assert b"predict_failure_total" in response.content
     assert b"predict_inference_duration_seconds" in response.content
-    assert b"user_input_word_length_seconds" in response.content
+    assert b"user_input_word_length" in response.content
     assert b"prediction_label_total" in response.content
     assert b"prediction_confidence" in response.content
 
