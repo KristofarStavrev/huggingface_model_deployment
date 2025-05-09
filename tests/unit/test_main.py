@@ -64,7 +64,6 @@ def test_metrics_endpoint_auth_success(mocker):
     assert response.status_code == 200
     assert b"root_requests_total" in response.content
     assert b"predict_requests_total" in response.content
-    assert b"root_duration_seconds" in response.content
     assert b"predict_success_total" in response.content
     assert b"predict_failure_total" in response.content
     assert b"predict_inference_duration_seconds" in response.content

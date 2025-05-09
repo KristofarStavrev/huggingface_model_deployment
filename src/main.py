@@ -52,12 +52,13 @@ class PredictionRequest(BaseModel):
 # Metric for Prometheus
 ROOT_REQUEST = Counter("root_requests_total", "Total number of root requests")
 PREDICT_REQUESTS = Counter('predict_requests_total', 'Total number of POST requests to the /predict endpoint')
-ROOT_DURATION = Histogram('root_duration_seconds', 'Time spent on the / endpoint in seconds')
 PREDICT_SUCCESSES = Counter("predict_success_total", "Total number of successful predictions")
 PREDICT_FAILURES = Counter("predict_failure_total", "Total number of failed predictions")
 PREDICT_INFERENCE_DURATION = Histogram(
     "predict_inference_duration_seconds",
-    "Time spent performing inference in the /predict endpoint"
+    "Time spent performing inference in the /predict endpoint",
+    buckets=[0.005, 0.01, 0.015, 0.0175, 0.02, 0.0225, 0.025, 0.0275, 0.03,
+             0.04, 0.05, 0.075, 0.1, 0.15, 0.2, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0]
 )
 USER_INPUT_WORDS_LENGTH = Histogram(
     "user_input_word_length",
@@ -83,7 +84,6 @@ PREDICTION_CONFIDENCE_HISTOGRAM = Histogram(
 LAST_CONFIDENCE = Gauge("last_prediction_confidence", "Confidence of the last prediction")
 
 @app.get("/")
-@ROOT_DURATION.time()
 def root() -> dict[str, str]:
     """
     Root endpoint that returns a welcome message.
