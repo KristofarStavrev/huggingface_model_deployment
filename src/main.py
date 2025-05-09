@@ -78,7 +78,7 @@ PREDICTION_CONFIDENCE_HISTOGRAM = Histogram(
     "prediction_confidence",
     "Confidence scores of predictions",
     ["label"],  # Separate histogram per class (optional, but insightful)
-    buckets=[i * 0.1 for i in range(11)]  # 0.0 to 1.0 in steps of 0.1
+    buckets=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 )
 
 LAST_CONFIDENCE = Gauge("last_prediction_confidence", "Confidence of the last prediction")
@@ -103,9 +103,10 @@ def predict(request: PredictionRequest) -> dict[str, Union[str, dict]]:
     """
 
     PREDICT_REQUESTS.inc()
-    logger.info(f"Prediction request received: {request.text}")
-
     input_length = len(request.text.split())
+    logger.info(f"Prediction request received: {request.text}")
+    logger.info(f"Total number of words in the request: {input_length}")
+
     USER_INPUT_WORDS_LENGTH.observe(input_length)
 
     start_time = time.perf_counter()

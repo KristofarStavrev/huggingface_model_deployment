@@ -46,7 +46,7 @@
 
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
-- [ ] FOR FUTURE IMPROVEMENTS: Model tracking, data drift tracking, automated retraining
+- [ ] FOR FUTURE IMPROVEMENTS: User feedback system, Model tracking, data drift tracking, automated retraining
 - [ ] FOR FUTURE IMPROVEMENTS: Airflow/Dagster/Argo
 
 ## What to focus for the logging
