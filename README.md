@@ -34,7 +34,7 @@
     - [X] Prometheus
     - [X] Grafana
     - [X] Create metrics for Prometheus
-    - [ ] Create a few Grafana dashboards
+    - [X] Create a few Grafana dashboards
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
 - [ ] Kubernetes/Kserve/Helmchart + GPU
 - [ ] Code refactoring and finishing touches
@@ -54,3 +54,8 @@ User Feedback/User ratings or corrections to detect bad responses.
 
 ## Tests coverage report
 ![Tests coverage report](docs/img/tests-coverage-report.png)
+
+## Grafana Dashboard with Prometheus metrics and Loki logs
+![Dashboard image 1](docs/img/grafana-dashboard-1.png)
+![Dashboard image 2](docs/img/grafana-dashboard-2.png)
+![Dashboard image 3](docs/img/grafana-dashboard-3.png)
