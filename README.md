@@ -3,6 +3,14 @@
 ## Current infrastructure
 ![Infrastructure](docs/img/infrastructure-diagram.png)
 
+## Tests coverage report
+![Tests coverage report](docs/img/tests-coverage-report.png)
+
+## Grafana Dashboard with Prometheus metrics and Loki logs
+![Dashboard image 1](docs/img/grafana-dashboard-1.png)
+![Dashboard image 2](docs/img/grafana-dashboard-2.png)
+![Dashboard image 3](docs/img/grafana-dashboard-3.png)
+
 ## TODO:
 - [X] Upload model to HuggingFace modelhub
 - [X] Productionize and modularize notebook code
@@ -11,7 +19,7 @@
     - [X] Integrate poetry
     - [X] Separate the fastAPI backend and gradio frontend services in different containers
     - [X] Handle them with Docker compose
-- [X] CI/CD
+- [X] GitHub CI/CD
     - [X] Use a self-hosted CI/CD runner
     - [X] Use a self-hosted docker image repository
     - [X] Self-host the deployment environment
@@ -19,6 +27,7 @@
     - [X] Enable image caching in the self-hosted runner
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
+    - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools would be Jenkins, Argo, CircleCI
 - [X] Code styling, linting, security and tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
@@ -36,7 +45,8 @@
     - [X] Create metrics for Prometheus
     - [X] Create a few Grafana dashboards
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
-- [ ] Kubernetes/Kserve/Helmchart + GPU
+    - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
+- [ ] Kubernetes/Kserve/Helmchart/Kubeflow + GPU
 - [ ] Code refactoring and finishing touches
     - [ ] Training/Validation/Testing scripts and modularity
     - [ ] Documentation (MkDocs / Sphinx) + Docstrings
@@ -46,16 +56,14 @@
 
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
-- [ ] FOR FUTURE IMPROVEMENTS: User feedback system, Model tracking, data drift tracking, automated retraining
-- [ ] FOR FUTURE IMPROVEMENTS: Airflow/Dagster/Argo
+- [ ] FOR FUTURE IMPROVEMENTS: User feedback system for model accuracy, Model tracking, data drift tracking, automated retraining (Evidently)
+- [ ] FOR FUTURE IMPROVEMENTS: Airflow/Dagster/Prefect/Argo
+- [ ] FOR FUTURE IMPROVEMENTS: Weights & Biases (W&B) - paid alternative to MLflow
+- [ ] FOR FUTURE IMPROVEMENTS: ONNX/TorchScript (for Pytorch environment) - used to serialize and export models for cross-framework compatibility and efficient inference
+- [ ] FOR FUTURE IMPROVEMENTS: TorchServe / TensorFlow Serving / Triton Inference Server - for serving models at scale
+- [ ] FOR FUTURE IMPROVEMENTS: DVC for storing and versioning data and model weights
+- [ ] FOR FUTURE IMPROVEMENTS: Distributed Computing - Dask, Spark
+- [ ] FOR FUTURE IMPROVEMENTS: GPU accelerated data science: CuDF, CuML
+- [ ] FOR FUTURE IMPROVEMENTS: Feature stores
 
-## What to focus for the logging
-User Feedback/User ratings or corrections to detect bad responses.
-
-## Tests coverage report
-![Tests coverage report](docs/img/tests-coverage-report.png)
-
-## Grafana Dashboard with Prometheus metrics and Loki logs
-![Dashboard image 1](docs/img/grafana-dashboard-1.png)
-![Dashboard image 2](docs/img/grafana-dashboard-2.png)
-![Dashboard image 3](docs/img/grafana-dashboard-3.png)
+Useful MLOps learning path: https://github.com/graviraja/MLOps-Basics
