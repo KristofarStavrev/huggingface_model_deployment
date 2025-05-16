@@ -65,5 +65,6 @@
 - [ ] FOR FUTURE IMPROVEMENTS: Distributed Computing - Dask, Spark
 - [ ] FOR FUTURE IMPROVEMENTS: GPU accelerated data science: CuDF, CuML
 - [ ] FOR FUTURE IMPROVEMENTS: Feature stores
+- [ ] PyTorch Lightning - streamline the process of developing, training, and scaling deep learning pytorch models
 
 Useful MLOps learning path: https://github.com/graviraja/MLOps-Basics
