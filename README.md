@@ -46,7 +46,13 @@
     - [X] Create a few Grafana dashboards
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
-- [ ] Kubernetes/Kserve/Helmchart/Kubeflow + GPU
+- [ ] Deployment and orchestration
+    - [ ] Kubernetes theoretical + terminology - cluster, master, workers, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
+    - [ ] Kubernetes practical (Kind/MiniCube and full scale deployment) + set-up GPU + Unique ID to know from which container the response comes
+    - [ ] K9s
+    - [ ] Helmchart (+ helmify)
+    - [ ] Kserve
+    - [ ] Kubeflow
 - [ ] Code refactoring and finishing touches
     - [ ] Training/Validation/Testing scripts and modularity
     - [ ] Documentation (MkDocs / Sphinx) + Docstrings
