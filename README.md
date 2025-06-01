@@ -48,7 +48,7 @@
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
 - [ ] Deployment and orchestration
     - [ ] Kubernetes theoretical + terminology - cluster, master, workers, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
-    - [ ] Kubernetes practical (Kind/MiniCube and full scale deployment) + set-up GPU + Unique ID to know from which container the response comes
+    - [ ] Kubernetes practical (Kind/MiniCube/full scale deployment) + set-up GPU + Unique ID to know from which container the response comes
     - [ ] K9s
     - [ ] Helmchart (+ helmify)
     - [ ] Kserve
@@ -59,7 +59,6 @@
     - [ ] Documentation for the GitHub Read.me - how to start the app, etc.
     - [ ] Use the GPU instead of the CPU in model_utils
 - [IN PROGRESS] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
-
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
 - [ ] FOR FUTURE IMPROVEMENTS: User feedback system for model accuracy, Model tracking, data drift tracking, automated retraining (Evidently)
