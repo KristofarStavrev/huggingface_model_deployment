@@ -52,7 +52,7 @@
         - [X] Set-up the full-scale-like production like cluster with multiple machines
         - [X] Move the self hosted docker image repository on the cluster
         - [X] Set-up the GPUs on the cluster
-        - [ ] Deploy the App
+        - [ ] Deploy the App using a raw K8s manifest
         - [ ] Get the unique IDs to know from which container the response comes
         - [ ] Helmify the kubernetes yaml files (create Helmcharts)
     - [X] K9s workflow
