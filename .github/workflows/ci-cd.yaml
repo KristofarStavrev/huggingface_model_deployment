@@ -20,8 +20,8 @@ jobs:
 
       - name: Build and run tests in Docker
         run: |
-          docker build -t my-app-test -f docker/testjob.Dockerfile .
-          docker run --rm my-app-test
+          docker build -t sentiment-app-test -f docker/testjob.Dockerfile .
+          docker run --rm sentiment-app-test
 
   build:
     runs-on: self-hosted # Running on a self-hosted runner
