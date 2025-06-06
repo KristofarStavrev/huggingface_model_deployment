@@ -48,9 +48,14 @@
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
 - [ ] Deployment and orchestration
     - [ ] Kubernetes theoretical + terminology - cluster, master, workers, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
-    - [ ] Kubernetes practical (Kind/MiniCube/full scale deployment) + set-up GPU + Unique ID to know from which container the response comes
-    - [ ] K9s
-    - [ ] Helmchart (+ helmify)
+    - [ ] Kubernetes practical
+        - [X] Set-up the full-scale-like production like cluster with multiple machines
+        - [X] Move the self hosted docker image repository on the cluster
+        - [X] Set-up the GPUs on the cluster
+        - [ ] Deploy the App
+        - [ ] Get the unique IDs to know from which container the response comes
+        - [ ] Helmify the kubernetes yaml files (create Helmcharts)
+    - [X] K9s workflow
     - [ ] Kserve
     - [ ] Kubeflow
 - [ ] Code refactoring and finishing touches
