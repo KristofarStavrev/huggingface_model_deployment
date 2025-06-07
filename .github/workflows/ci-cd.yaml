@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: self-hosted # Running on a self-hosted runner
+    runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
     steps:
       # Checkout the repository
       - name: Checkout Code
@@ -20,11 +20,11 @@ jobs:
 
       - name: Build and run tests in Docker
         run: |
-          docker build -t sentiment-app-test -f docker/testjob.Dockerfile .
-          docker run --rm sentiment-app-test
+          nerdctl build -t sentiment-app-test -f docker/testjob.Dockerfile .
+          nerdctl run --rm sentiment-app-test
 
   build:
-    runs-on: self-hosted # Running on a self-hosted runner
+    runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
     needs: test  # This job will run after the test job
 
     steps:
@@ -33,25 +33,29 @@ jobs:
         uses: actions/checkout@v2
 
       # Log in to Self-Hosted Docker Registry
-      - name: Log in to Self-Hosted Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ secrets.LOCAL_IMG_REG_IP }}
-          username: ${{ secrets.LOCAL_IMG_REG_USER }}
-          password: ${{ secrets.LOCAL_IMG_REG_PASS }}
+      # - name: Log in to Self-Hosted Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ${{ secrets.LOCAL_IMG_REG_IP }}
+      #     username: ${{ secrets.LOCAL_IMG_REG_USER }}
+      #     password: ${{ secrets.LOCAL_IMG_REG_PASS }}
+
+      # - name: Log in to Self-Hosted Registry (nerdctl)
+      #   run: |
+      #     echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | nerdctl login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
       # Build the Docker image (fastapi and gradio)
       - name: Build Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml build
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml build
       
       # Push Docker images to Docker Hub
       - name: Push Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml push
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml push
 
   deploy:
-    runs-on: self-hosted # Running on a self-hosted runner
+    runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
     needs: build  # This job will run after the build job
 
     steps:
@@ -90,7 +94,7 @@ jobs:
           EOF
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sentiment-app-master]
     needs: deploy  # Runs after deployment is complete
     if: startsWith(github.ref, 'refs/tags/')  # Only runs if a tag is pushed
 

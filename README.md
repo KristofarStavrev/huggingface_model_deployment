@@ -62,7 +62,7 @@
     - [ ] Training/Validation/Testing scripts and modularity
     - [ ] Documentation (MkDocs / Sphinx) + Docstrings
     - [ ] Documentation for the GitHub Read.me - how to start the app, etc.
-    - [ ] Use the GPU instead of the CPU in model_utils
+    - [ ] Use the GPU instead of the CPU in Docker
 - [IN PROGRESS] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
