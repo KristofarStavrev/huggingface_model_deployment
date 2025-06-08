@@ -32,17 +32,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      # Log in to Self-Hosted Docker Registry
-      # - name: Log in to Self-Hosted Registry
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: ${{ secrets.LOCAL_IMG_REG_IP }}
-      #     username: ${{ secrets.LOCAL_IMG_REG_USER }}
-      #     password: ${{ secrets.LOCAL_IMG_REG_PASS }}
-
-      # - name: Log in to Self-Hosted Registry (nerdctl)
-      #   run: |
-      #     echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | nerdctl login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+      - name: Log in to Self-Hosted Registry (nerdctl)
+        run: |
+          echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | sudo nerdctl login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
       # Build the Docker image (fastapi and gradio)
       - name: Build Docker Images
