@@ -64,9 +64,9 @@ jobs:
             # Log in to self-hosted registry
             echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
-            # Fetch the docker-compose.yml file
-            wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
-              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
+            # Fetch the docker-compose-full.yml file
+            wget -O /home/${{ secrets.USER }}/deployment/docker-compose-full.yml \
+              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose-full.yml
             
             # Fetch the promtail config file
             wget -O /home/${{ secrets.USER }}/deployment/promtail/promtail-config.yml \
@@ -79,9 +79,9 @@ jobs:
 
             # Pull latest images and restart services
             cd /home/${{ secrets.USER }}/deployment &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml down --remove-orphans &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml pull &&
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml down --remove-orphans &&
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml up -d
             docker image prune -f
           EOF
 

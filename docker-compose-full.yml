@@ -30,3 +30,18 @@ services:
       fastapi:
         condition: service_healthy
     restart: always
+
+  promtail:
+    image: grafana/promtail:3.4.3
+    container_name: promtail
+    ports:
+      - "9080:9080"
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log:/var/log:ro
+      - ./promtail:/etc/promtail
+    environment:
+      - LOKI_URL=${LOKI_URL}
+    command: -config.file=/etc/promtail/promtail-config.yml -config.expand-env=true
+    restart: always
