@@ -48,7 +48,7 @@
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
 - [ ] Deployment and orchestration
-    - [ ] Kubernetes theoretical + terminology - cluster, master, workers, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
+    - [ ] Kubernetes theoretical + terminology - cluster, master, workers, nodes, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
     - [ ] Kubernetes practical
         - [X] Set-up the full-scale-like production like cluster with multiple machines
         - [X] Move the self hosted docker image repository on the cluster
