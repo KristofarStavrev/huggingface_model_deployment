@@ -25,6 +25,7 @@
     - [X] Self-host the deployment environment
     - [X] Clean-up old images/containers on the prod server
     - [X] Enable image caching in the self-hosted runner
+    - [X] Migrated the runner to a dedicated machine
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
     - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools would be Jenkins, Argo, CircleCI
