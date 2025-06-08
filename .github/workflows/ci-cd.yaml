@@ -47,12 +47,12 @@ jobs:
       # Build the Docker image (fastapi and gradio)
       - name: Build Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} sudo nerdctl compose -f docker-compose.yml build
+          sudo env REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml build
       
       # Push Docker images to Docker Hub
       - name: Push Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} sudo nerdctl compose -f docker-compose.yml push
+          sudo env REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml push
 
   deploy:
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
