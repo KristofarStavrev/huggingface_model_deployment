@@ -20,8 +20,8 @@ jobs:
 
       - name: Build and run tests in Docker
         run: |
-          nerdctl build -t sentiment-app-test -f docker/testjob.Dockerfile .
-          nerdctl run --rm sentiment-app-test
+          sudo nerdctl build -t sentiment-app-test -f docker/testjob.Dockerfile .
+          sudo nerdctl run --rm sentiment-app-test
 
   build:
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
@@ -47,12 +47,12 @@ jobs:
       # Build the Docker image (fastapi and gradio)
       - name: Build Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml build
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} sudo nerdctl compose -f docker-compose.yml build
       
       # Push Docker images to Docker Hub
       - name: Push Docker Images
         run: |
-          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml push
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} sudo nerdctl compose -f docker-compose.yml push
 
   deploy:
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
