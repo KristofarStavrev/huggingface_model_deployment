@@ -20,8 +20,8 @@ jobs:
 
       - name: Build and run tests in Docker
         run: |
-          sudo nerdctl build -t sentiment-app-test -f docker/testjob.Dockerfile .
-          sudo nerdctl run --rm sentiment-app-test
+          docker build -t sentiment-app-test -f docker/testjob.Dockerfile .
+          docker run --rm sentiment-app-test
 
   build:
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
@@ -32,19 +32,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Log in to Self-Hosted Registry (nerdctl)
-        run: |
-          echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | sudo nerdctl login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+      # Log in to Self-Hosted Docker Registry
+      - name: Log in to Self-Hosted Registry
+        uses: docker/login-action@v3Add commentMore actions
+        with:
+          registry: ${{ secrets.LOCAL_IMG_REG_IP }}
+          username: ${{ secrets.LOCAL_IMG_REG_USER }}
+          password: ${{ secrets.LOCAL_IMG_REG_PASS }}
 
       # Build the Docker image (fastapi and gradio)
       - name: Build Docker Images
         run: |
-          sudo env REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml build
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml build
       
       # Push Docker images to Docker Hub
       - name: Push Docker Images
         run: |
-          sudo env REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} nerdctl compose -f docker-compose.yml push
+          REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml push
 
   deploy:
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
@@ -64,9 +68,9 @@ jobs:
             # Log in to self-hosted registry
             echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
-            # Fetch the docker-compose-full.yml file
-            wget -O /home/${{ secrets.USER }}/deployment/docker-compose-full.yml \
-              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose-full.yml
+            # Fetch the docker-compose.yml file
+            wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
+              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
             
             # Fetch the promtail config file
             wget -O /home/${{ secrets.USER }}/deployment/promtail/promtail-config.yml \
@@ -79,9 +83,9 @@ jobs:
 
             # Pull latest images and restart services
             cd /home/${{ secrets.USER }}/deployment &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml pull &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml down --remove-orphans &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose-full.yml up -d
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml down --remove-orphans &&
+            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
             docker image prune -f
           EOF
 
