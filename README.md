@@ -48,13 +48,14 @@
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
 - [ ] Deployment and orchestration
-    - [ ] Kubernetes theoretical + terminology - cluster, master, workers, nodes, pods, deployment, ConfigMaps, secrets, services, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
+    - [X] Kubernetes theoretical + terminology - cluster, master, workers, nodes, pods, deployment, service, ConfigMaps, secrets, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
     - [ ] Kubernetes practical
         - [X] Set-up the full-scale-like production like cluster with multiple machines
         - [X] Move the self hosted docker image repository on the cluster
         - [X] Set-up the GPUs on the K8s cluster
         - [ ] Deploy the App using a raw K8s manifest
         - [ ] Get the unique IDs to know from which container the response comes
+        - [ ] Allow the containers to use the GPU
         - [ ] Helmify the kubernetes yaml files (create Helmcharts)
     - [X] K9s workflow
     - [ ] Kserve
