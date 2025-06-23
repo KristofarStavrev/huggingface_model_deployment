@@ -35,3 +35,9 @@ dmypy.json
 
 # Environment variables
 .env
+
+# K8s
+k8s/fastapi-secret.yaml
+
+# Heml charts
+values-secret.yaml

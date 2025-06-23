@@ -10,7 +10,6 @@ services:
     image: "${REGISTRY_URL}/khstavrev/fastapi-app:latest"
     ports:
       - "8000:8000"
-    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://fastapi:8000/docs"]
       interval: 10s
@@ -22,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: docker/gradio.Dockerfile
+    environment:
+      - FASTAPI_URL=${FASTAPI_URL}
     container_name: gradio
     image: "${REGISTRY_URL}/khstavrev/gradio-app:latest"
     ports:
@@ -29,7 +30,6 @@ services:
     depends_on:
       fastapi:
         condition: service_healthy
-    restart: always
 
   promtail:
     image: grafana/promtail:3.4.3
@@ -44,4 +44,3 @@ services:
     environment:
       - LOKI_URL=${LOKI_URL}
     command: -config.file=/etc/promtail/promtail-config.yml -config.expand-env=true
-    restart: always

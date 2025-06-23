@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.components.gradio.service.service_name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: gradio
+  ports:
+    - protocol: {{ .Values.components.gradio.service.service_protocol }}
+      port: {{ .Values.components.gradio.service.service_port }}
+      targetPort: {{ .Values.components.gradio.deployment.container_port }}

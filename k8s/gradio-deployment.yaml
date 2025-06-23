@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gradio-deployment
+  namespace: sentiment-app
+  labels:
+    app: gradio
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gradio
+  template:
+    metadata:
+      labels:
+        app: gradio
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
+      containers:
+        - name: gradio
+          image: # SELF_HOSTED_REPO_IP_PORT_HERE/gradio-app:latest
+          ports:
+            - containerPort: 7860
+          env:
+            - name: FASTAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: fastapi-url
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "512Mi"
+            limits:
+              cpu: "600m"
+              memory: "2Gi"

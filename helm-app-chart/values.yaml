@@ -1,0 +1,62 @@
+namespace: sentiment-app
+
+components:
+  fastapi:
+    secret:
+      name: fastapi-secret
+
+    configmap:
+      name: fastapi-config
+      predict_endpoint: "/predict"
+      protocol: "http://"
+
+    deployment:
+      deployment_name: fastapi-deployment
+      replicas: 2
+      container_name: fastapi
+      docker_image: fastapi-app
+      docker_image_tag: latest
+      container_port: 8000
+      resources:
+        requests:
+          cpu: "150m"
+          memory: "512Mi"
+        limits:
+          cpu: "600m"
+          memory: "2Gi"
+          gpu: 1
+
+    service:
+      service_name: fastapi-service
+      service_port: 8000
+      service_protocol: TCP
+
+  gradio:
+    deployment:
+      deployment_name: gradio-deployment
+      replicas: 2
+      container_name: gradio
+      docker_image: gradio-app
+      docker_image_tag: latest
+      container_port: 7860
+      resources:
+        requests:
+          cpu: "150m"
+          memory: "512Mi"
+        limits:
+          cpu: "600m"
+          memory: "2Gi"
+
+    service:
+      service_name: gradio-service
+      service_port: 7860
+      service_protocol: TCP
+
+  ingress:
+    ingress_name: sentiment-app-ingress
+    ingress_class: nginx
+    ingress_host: movie-sentiment.local
+    ingress_fastapi_path: /
+    ingress_fastapi_path_type: Prefix
+    ingress_gradio_path: /ui
+    ingress_gradio_path_type: Prefix

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-deployment
+  namespace: sentiment-app
+  labels:
+    app: fastapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
+      containers:
+        - name: fastapi
+          image: # SELF_HOSTED_REPO_IP_PORT_HERE/fastapi-app:latest
+          ports:
+            - containerPort: 8000
+          # A fastapi-secret.yaml file needs to be created with the base64 encoded values for the Prometheus user and password.
+          env:
+            - name: PROMETHEUS_METRICS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: fastapi-secret
+                  key: prometheus-user
+            - name: PROMETHEUS_METRICS_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: fastapi-secret
+                  key: prometheus-password
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "512Mi"
+            limits:
+              cpu: "600m"
+              memory: "2Gi"
+              nvidia.com/gpu: 1
