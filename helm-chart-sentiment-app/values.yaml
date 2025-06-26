@@ -13,6 +13,7 @@ components:
     deployment:
       deployment_name: fastapi-deployment
       replicas: 2
+      strategy: Recreate # Needed because you need at least replicas+1 nodes with GPU support for a rolling update
       container_name: fastapi
       docker_image: fastapi-app
       docker_image_tag: latest

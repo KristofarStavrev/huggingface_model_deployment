@@ -7,6 +7,8 @@ metadata:
     app: fastapi
 spec:
   replicas: {{ .Values.components.fastapi.deployment.replicas }}
+  strategy:
+    type: {{ .Values.components.fastapi.deployment.strategy }}
   selector:
     matchLabels:
       app: fastapi
@@ -14,6 +16,8 @@ spec:
     metadata:
       labels:
         app: fastapi
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }} # Random string with 5 chars to force pod restart on each deployment
     spec:
       affinity:
         nodeAffinity:

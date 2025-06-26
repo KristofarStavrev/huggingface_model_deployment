@@ -28,7 +28,7 @@
     - [X] Migrated the runner to a dedicated machine
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
-    - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools would be Jenkins, Argo, CircleCI
+    - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools for CI/CD would be Jenkins, Argo, CircleCI
 - [X] Code styling, linting, security and tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
@@ -57,8 +57,11 @@
         - [X] Test what happens on simulated node failures (+ that the old deployment is stopped correctly)
         - [X] Add an Ingress component
         - [X] Allow the containers to use the GPU
-        - [ ] Helmify the kubernetes yaml manifests
+        - [X] Helmify the kubernetes yaml manifests
         - [ ] Update the CI/CD to work with the new Helm deployment
+        - [ ] Package and add the chart to the releases as well
+        - [ ] What is the bitnami stuff in the confluence docs
+        - [ ] FOR FUTURE IMPROVEMENTS: Introduce probes (liveness, readiness)
         - [ ] FOR FUTURE IMPROVEMENTS: Handle monitoring (Promtail, Loki, Prometheus, Grafana) in the cluster
     - [X] K9s workflow
     - [ ] Kserve basic understanding
