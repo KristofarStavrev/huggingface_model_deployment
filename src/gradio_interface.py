@@ -35,7 +35,7 @@ class SentimentAnalysisAppUI:
         launch_gradio: Launches the Gradio interface.
     """
 
-    def __init__(self, api_url: str = os.getenv("FASTAPI_URL"),
+    def __init__(self, api_url: str = os.getenv("FASTAPI_URL", "http://fastapi-service:8000/predict"),
                  server_name: str = "0.0.0.0",
                  server_port: int = 7860,
                  root_path: str = "/ui",
