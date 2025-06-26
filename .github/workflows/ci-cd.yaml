@@ -36,6 +36,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      # Set up Helm
       - name: Set up Helm
         uses: azure/setup-helm@v3
         with:
@@ -68,6 +69,11 @@ jobs:
         run: |
           helm package ./helm-chart-sentiment-app/
 
+      # Log in to the self-hosted Helm registry (Docker registry)
+      - name: Helm login to registry
+        run: |
+          echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | helm registry login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+
       # Push Helm chart to self-hosted registry
       - name: Push Helm chart to registry
         run: helm push helm-chart-sentiment-app-${{ steps.get_version.outputs.version }}.tgz oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts
@@ -88,8 +94,8 @@ jobs:
       - name: Deploy to WSL
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
-            # Log in to self-hosted registry
-            echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+            # Log in to the self-hosted Helm registry (Docker registry)
+            echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | helm registry login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
             # Deploy the application using the Helm chart
             helm upgrade --install sentiment-app \ 
