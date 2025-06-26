@@ -98,8 +98,8 @@ jobs:
             echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | helm registry login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
             # Deploy the application using the Helm chart
-            helm upgrade --install sentiment-app \ 
-              oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \ 
+            helm upgrade --install sentiment-app \
+              oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \
               --version ${{ needs.build.outputs.chart_version }} \
               --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/${{ secrets.LOCAL_IMG_REG_USER }}" \
               --set-string fast_api_secret_prometheus_user="${{ secrets.PROMETHEUS_METRICS_USER }}" \
