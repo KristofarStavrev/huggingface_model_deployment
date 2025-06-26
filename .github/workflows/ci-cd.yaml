@@ -107,7 +107,7 @@ jobs:
           helm upgrade --install sentiment-app \
             oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \
             --version ${{ needs.build.outputs.chart_version }} \
-            --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/khstavrev" \
+            --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/khstavrev/" \
             --set-string fast_api_secret_prometheus_user="${{ secrets.PROMETHEUS_METRICS_USER }}" \
             --set-string fast_api_secret_prometheus_password="${{ secrets.PROMETHEUS_METRICS_PASS }}"
 
