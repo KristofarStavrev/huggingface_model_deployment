@@ -36,9 +36,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install unzip (on self-hosted runner)
-        run: sudo apt-get update && sudo apt-get install -y unzip
-
       - name: Set up Helm
         uses: azure/setup-helm@v3
         with:
