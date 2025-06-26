@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   test:
+    if: github.ref == 'refs/heads/main'
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
     steps:
       # Checkout the repository
@@ -24,13 +25,19 @@ jobs:
           docker run --rm sentiment-app-test
 
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
+    outputs:
+      chart_version: ${{ steps.get_version.outputs.version }}
     needs: test  # This job will run after the test job
 
     steps:
       # Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
 
       # Log in to Self-Hosted Docker Registry
       - name: Log in to Self-Hosted Registry
@@ -47,7 +54,24 @@ jobs:
         run: |
           REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml push
 
+      # Get the Helm chart version
+      - name: Extract chart version
+        id: get_version
+        run: |
+          VERSION=$(grep '^version:' helm-chart-sentiment-app/Chart.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # Create a helm package
+      - name: Create Helm Package
+        run: |
+          helm package ./helm-chart-sentiment-app/
+
+      # Push Helm chart to self-hosted registry
+      - name: Push Helm chart to registry
+        run: helm push helm-chart-sentiment-app-${{ steps.get_version.outputs.version }}.tgz oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts
+
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: [self-hosted, sentiment-app-master] # Running on a self-hosted runner
     needs: build  # This job will run after the build job
 
@@ -65,30 +89,17 @@ jobs:
             # Log in to self-hosted registry
             echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | docker login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
-            # Fetch the docker-compose.yml file
-            wget -O /home/${{ secrets.USER }}/deployment/docker-compose.yml \
-              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/docker-compose.yml
-            
-            # Fetch the promtail config file
-            wget -O /home/${{ secrets.USER }}/deployment/promtail/promtail-config.yml \
-              https://raw.githubusercontent.com/KristofarStavrev/huggingface_model_deployment/main/promtail/promtail-config.yml
-
-            # Create .env file from secrets
-            echo "LOKI_URL=${{ secrets.LOKI_URL }}" > /home/${{ secrets.USER }}/deployment/.env
-            echo "PROMETHEUS_METRICS_USER=${{ secrets.PROMETHEUS_METRICS_USER }}" >> /home/${{ secrets.USER }}/deployment/.env
-            echo "PROMETHEUS_METRICS_PASS=${{ secrets.PROMETHEUS_METRICS_PASS }}" >> /home/${{ secrets.USER }}/deployment/.env
-
-            # Pull latest images and restart services
-            cd /home/${{ secrets.USER }}/deployment &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml pull &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml down --remove-orphans &&
-            REGISTRY_URL=${{ secrets.LOCAL_IMG_REG_IP }} docker compose -f docker-compose.yml up -d
-            docker image prune -f
+            # Deploy the application using the Helm chart
+            helm upgrade --install sentiment-app \ 
+              oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \ 
+              --version ${{ needs.build.outputs.chart_version }} \
+              --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/${{ secrets.LOCAL_IMG_REG_USER }}" \
+              --set-string fast_api_secret_prometheus_user="${{ secrets.PROMETHEUS_METRICS_USER }}" \
+              --set-string fast_api_secret_prometheus_password="${{ secrets.PROMETHEUS_METRICS_PASS }}"
           EOF
 
   release:
     runs-on: [self-hosted, sentiment-app-master]
-    needs: deploy  # Runs after deployment is complete
     if: startsWith(github.ref, 'refs/tags/')  # Only runs if a tag is pushed
 
     steps:

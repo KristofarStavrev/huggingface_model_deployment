@@ -28,7 +28,8 @@
     - [X] Migrated the runner to a dedicated machine
     - [X] Create an automated release when a new tag is created
     - [ ] FOR FUTURE IMPROVEMENTS: Tag docker images with release/commit tag
-    - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools would be Jenkins, Argo, CircleCI
+    - [ ] FOR FUTURE IMPROVEMENTS: Implement better workflow for feature branches (e.g. CI and test before merging with master)
+    - [ ] FOR FUTURE IMPROVEMENTS: Alternative tools for CI/CD would be Jenkins, Argo, CircleCI
 - [X] Code styling, linting, security and tests
     - [X] Pytest for unit/mock/integration tests
     - [X] Code coverage
@@ -53,19 +54,25 @@
         - [X] Set-up the full-scale-like production like cluster with multiple machines
         - [X] Move the self hosted docker image repository on the cluster
         - [X] Set-up the GPUs on the K8s cluster
-        - [ ] Deploy the App using a raw K8s manifest
-        - [ ] Get the unique IDs to know from which container the response comes
-        - [ ] Allow the containers to use the GPU
-        - [ ] Helmify the kubernetes yaml files (create Helmcharts)
+        - [X] Deploy the App using a raw K8s manifest
+        - [X] Test what happens on simulated node failures (+ that the old deployment is stopped correctly)
+        - [X] Add an Ingress component
+        - [X] Allow the containers to use the GPU
+        - [X] Helmify the kubernetes yaml manifests
+        - [ ] Update the CI/CD to work with the new Helm deployment
+        - [ ] Package and add the chart to the releases as well
+        - [ ] FOR FUTURE IMPROVEMENTS: Introduce probes (liveness, readiness)
+        - [ ] FOR FUTURE IMPROVEMENTS: Handle monitoring (Promtail, Loki, Prometheus, Grafana) in the cluster
     - [X] K9s workflow
-    - [ ] Kserve
-    - [ ] Kubeflow
+    - [ ] Kserve basic understanding
+    - [ ] Kubeflow basic understanding
+    - [ ] FOR FUTURE IMPROVEMENTS: Kserve practical
+    - [ ] FOR FUTURE IMPROVEMENTS: Kubeflow practical
 - [ ] Code refactoring and finishing touches
     - [ ] Training/Validation/Testing scripts and modularity
-    - [ ] Documentation (MkDocs / Sphinx) + Docstrings
+    - [ ] Create an diagram for the entire architecture (CI/CD, K8s cluster, etc.)
     - [ ] Documentation for the GitHub Read.me - how to start the app, etc.
-    - [ ] Use the GPU instead of the CPU in Docker
-- [IN PROGRESS] Create an diagram for the entire architecture (CI/CD, model retraining, etc.)
+    - [ ] FOR FUTURE IMPROVEMENTS: Documentation with MkDocs / Sphinx
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
 - [ ] FOR FUTURE IMPROVEMENTS: User feedback system for model accuracy, Model tracking, data drift tracking, automated retraining (Evidently)
@@ -77,6 +84,6 @@
 - [ ] FOR FUTURE IMPROVEMENTS: Distributed Computing - Dask, Spark
 - [ ] FOR FUTURE IMPROVEMENTS: GPU accelerated data science: CuDF, CuML
 - [ ] FOR FUTURE IMPROVEMENTS: Feature stores
-- [ ] PyTorch Lightning - streamline the process of developing, training, and scaling deep learning pytorch models
+- [ ] FOR FUTURE IMPROVEMENTS: PyTorch Lightning - streamline the process of developing, training, and scaling deep learning pytorch models
 
 Useful MLOps learning path: https://github.com/graviraja/MLOps-Basics

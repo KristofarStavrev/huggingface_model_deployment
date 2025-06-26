@@ -2,6 +2,7 @@ import gradio as gr
 import requests
 import logging
 import sys
+import os
 
 # Set up the logger
 logger = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ class SentimentAnalysisAppUI:
         api_url (str): The URL of the FastAPI endpoint.
         server_name (str): The server name to use for the Gradio interface.
         server_port (int): The server port to use for the Gradio interface.
+        root_path (str): The root path for the Gradio interface (mainly used for ingress later on).
         prevent_thread_lock (bool): Whether to prevent thread lock when launching the interface.
 
     Methods:
@@ -33,14 +35,16 @@ class SentimentAnalysisAppUI:
         launch_gradio: Launches the Gradio interface.
     """
 
-    def __init__(self, api_url: str = "http://fastapi:8000/predict",
+    def __init__(self, api_url: str = os.getenv("FASTAPI_URL"),
                  server_name: str = "0.0.0.0",
                  server_port: int = 7860,
+                 root_path: str = "/ui",
                  prevent_thread_lock: bool = True):  # nosec
 
         self.api_url = api_url
         self.server_name = server_name
         self.server_port = server_port
+        self.root_path = root_path
         self.prevent_thread_lock = prevent_thread_lock
 
         logger.info("Initializing Gradio interface...")
@@ -93,6 +97,7 @@ class SentimentAnalysisAppUI:
         logger.info("Launching Gradio interface...")
         self.interface.launch(server_name=self.server_name,
                               server_port=self.server_port,
+                              root_path=self.root_path,
                               prevent_thread_lock=self.prevent_thread_lock)
 
 

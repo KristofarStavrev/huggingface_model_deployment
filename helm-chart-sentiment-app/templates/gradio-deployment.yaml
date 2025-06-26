@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.components.gradio.deployment.deployment_name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: gradio
+spec:
+  replicas: {{ .Values.components.gradio.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: gradio
+  template:
+    metadata:
+      labels:
+        app: gradio
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }} # Random string with 5 chars to force pod restart on each deployment
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
+      containers:
+        - name: {{ .Values.components.gradio.deployment.container_name }}
+          image: {{ .Values.image_repository }}{{ .Values.components.gradio.deployment.docker_image }}:{{ .Values.components.gradio.deployment.docker_image_tag }}
+          ports:
+            - containerPort: {{ .Values.components.gradio.deployment.container_port }}
+          env:
+            - name: FASTAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.components.fastapi.configmap.name }}
+                  key: fastapi-url
+          resources:
+            requests:
+              cpu: {{ .Values.components.gradio.deployment.resources.requests.cpu }}
+              memory: {{ .Values.components.gradio.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.components.gradio.deployment.resources.limits.cpu }}
+              memory: {{ .Values.components.gradio.deployment.resources.limits.memory }}

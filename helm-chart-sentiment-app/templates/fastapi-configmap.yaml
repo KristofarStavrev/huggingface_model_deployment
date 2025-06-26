@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.components.fastapi.configmap.name }}
+  namespace: {{ .Values.namespace }}
+data:
+  fastapi-url: "{{ .Values.components.fastapi.configmap.protocol }}{{ .Values.components.fastapi.service.service_name }}:{{ .Values.components.fastapi.service.service_port }}{{ .Values.components.fastapi.configmap.predict_endpoint }}"

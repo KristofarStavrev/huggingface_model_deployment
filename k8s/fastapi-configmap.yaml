@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+  namespace: sentiment-app
+data:
+  fastapi-url: "http://fastapi-service:8000/predict"
