@@ -38,6 +38,8 @@ jobs:
 
       - name: Set up Helm
         uses: azure/setup-helm@v3
+        with:
+          version: v3.18.1
 
       # Log in to Self-Hosted Docker Registry
       - name: Log in to Self-Hosted Registry
