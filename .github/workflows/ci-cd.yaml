@@ -90,10 +90,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.P_KEY }}
       
-      # SSH into WSL and deploy
-      - name: Deploy to WSL
+      # SSH into K8s cluster and deploy
+      - name: Deploy to K8s cluster
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} -p ${{ secrets.PORT }} << EOF
             # Log in to the self-hosted Helm registry (Docker registry)
             echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | helm registry login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
 
@@ -101,7 +101,7 @@ jobs:
             helm upgrade --install sentiment-app \
               oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \
               --version ${{ needs.build.outputs.chart_version }} \
-              --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/${{ secrets.LOCAL_IMG_REG_USER }}" \
+              --set-string image_repository="${{ secrets.LOCAL_IMG_REG_IP }}/khstavrev" \
               --set-string fast_api_secret_prometheus_user="${{ secrets.PROMETHEUS_METRICS_USER }}" \
               --set-string fast_api_secret_prometheus_password="${{ secrets.PROMETHEUS_METRICS_PASS }}"
           EOF
