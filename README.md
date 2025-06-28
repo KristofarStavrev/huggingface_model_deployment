@@ -60,7 +60,7 @@
         - [X] Allow the containers to use the GPU
         - [X] Helmify the kubernetes yaml manifests
         - [X] Update the CI/CD to work with the new Helm deployment
-        - [ ] Package and add the chart to the releases as well
+        - [X] Package and add the chart to the releases as well
         - [ ] FOR FUTURE IMPROVEMENTS: Introduce probes (liveness, readiness)
         - [ ] FOR FUTURE IMPROVEMENTS: Handle monitoring (Promtail, Loki, Prometheus, Grafana) in the cluster
     - [X] K9s workflow

@@ -119,6 +119,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      # Set up Helm
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.18.1
+
+      # Log in to the self-hosted Helm registry (Docker registry)
+      - name: Helm login to registry
+        run: |
+          echo "${{ secrets.LOCAL_IMG_REG_PASS }}" | helm registry login ${{ secrets.LOCAL_IMG_REG_IP }} -u ${{ secrets.LOCAL_IMG_REG_USER }} --password-stdin
+
+      # Get the Helm chart version
+      - name: Extract chart version
+        id: get_version
+        run: |
+          VERSION=$(grep '^version:' helm-chart-sentiment-app/Chart.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # Pull Helm chart to self-hosted registry
+      - name: Pull latest Helm chart from registry
+        run: helm pull oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app.tgz \
+          --version ${{ steps.get_version.outputs.version }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -128,3 +151,5 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            helm-chart-sentiment-app-${{ steps.get_version.outputs.version }}.tgz
