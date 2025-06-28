@@ -139,7 +139,7 @@ jobs:
 
       # Pull Helm chart to self-hosted registry
       - name: Pull latest Helm chart from registry
-        run: helm pull oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app.tgz \
+        run: helm pull oci://${{ secrets.LOCAL_IMG_REG_IP }}/helm-charts/helm-chart-sentiment-app \
           --version ${{ steps.get_version.outputs.version }}
 
       - name: Create GitHub Release
