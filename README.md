@@ -39,7 +39,7 @@
     - [X] Integrate tests in the CI/CD (Optionally use Nox to orchestrate)
     - [ ] FOR FUTURE IMPROVEMENTS: More strict code styling and introduce pre-commit hooks
     - [ ] FOR FUTURE IMPROVEMENTS: Stub files that mypy can use for the custom modules (model_utils.py)
-- [ ] Logs and messages
+- [X] Logs and messages
     - [X] Logging in all src codes
     - [X] Loki + Promtail
     - [X] Prometheus
@@ -48,9 +48,9 @@
     - [X] Create a few Grafana dashboards
     - [ ] FOR FUTURE IMPROVEMENTS: Kafka
     - [ ] FOR FUTURE IMPROVEMENTS: ELK (Elasticsearch, Logstash, Kibana)
-- [ ] Deployment and orchestration
-    - [X] Kubernetes theoretical + terminology - cluster, master, workers, nodes, pods, deployment, service, ConfigMaps, secrets, ingress, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
-    - [ ] Kubernetes practical
+- [X] Deployment and orchestration
+    - [X] Kubernetes theoretical + terminology - cluster, nodes, master, workers, pods, deployment, service, ConfigMaps, secrets, ingress, PersistentVolume, PersistentVolumeClaim, StorageClass, Daemonset, StatefulSet, HorizontalPodAutoscaler, rolling updates, probes (liveness/readiness)
+    - [X] Kubernetes practical
         - [X] Set-up the full-scale-like production like cluster with multiple machines
         - [X] Move the self hosted docker image repository on the cluster
         - [X] Set-up the GPUs on the K8s cluster
@@ -69,9 +69,9 @@
     - [ ] FOR FUTURE IMPROVEMENTS: Kserve practical
     - [ ] FOR FUTURE IMPROVEMENTS: Kubeflow practical
 - [ ] Code refactoring and finishing touches
-    - [ ] Training/Validation/Testing scripts and modularity
     - [ ] Create an diagram for the entire architecture (CI/CD, K8s cluster, etc.)
-    - [ ] Documentation for the GitHub Read.me - how to start the app, etc.
+    - [ ] Documentation for the Read.me - short summary + main features, how to deploy/start the app, how to use it, visual examples
+    - [ ] FOR FUTURE IMPROVEMENTS: Training/Validation/Testing scripts and modularity
     - [ ] FOR FUTURE IMPROVEMENTS: Documentation with MkDocs / Sphinx
 - [ ] FOR FUTURE IMPROVEMENTS: Deploy in AWS - EC2 or ECS
 - [ ] FOR FUTURE IMPROVEMENTS: Terraform/Ansible for infrastructure
