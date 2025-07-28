@@ -1,8 +1,8 @@
-# huggingface_model_deployment
+# Huggingface Model Deployment
 
 
 ## Project Overview
-This project is a hands-on DevOps/MLOps exercise focused on deploying a HuggingFace LoRA-based sentiment analysis model using best practices for productionization, CI/CD, security, monitoring, and scalable infrastructure using Kubernetes. The goal is to demonstrate a full ML product lifecycle, from model training to robust, observable, and secure deployment.
+This project is a hands-on DevOps/MLOps exercise focused on deploying a HuggingFace LoRA-based sentiment analysis model using best practices for productionization, CI/CD, security, monitoring, and scalable infrastructure on Kubernetes. The goal is to demonstrate a full ML product lifecycle, from model training to robust, observable, and secure deployment.
 
 ## Key Features
 - **Model**: Fine-tuned HuggingFace transformer (LoRA) for movie sentiment analysis
@@ -49,7 +49,7 @@ TODO                      # Project plan and future roadmap
 
 1. **Clone the repo**
 
-3. **Set environment variables** (example):
+2. **Set environment variables** (example):
    ```bash
    export REGISTRY_URL=local
    export PROMETHEUS_METRICS_USER=admin
@@ -58,12 +58,12 @@ TODO                      # Project plan and future roadmap
    export LOKI_URL=http://localhost:3100
    ```
 
-4. **Build and start Docker images using Docker Compose**:
+3. **Build and start Docker images using Docker Compose**:
    ```bash
    REGISTRY_URL=$REGISTRY_URL docker compose -f docker-compose.yml up --build
    ```
 
-5. **Access the services:**
+4. **Access the services:**
    - FastAPI: http://localhost:8000
    - Gradio UI: http://localhost:7860
 
@@ -99,14 +99,8 @@ TODO                      # Project plan and future roadmap
         ```
 
 4. **Install the Helm chart**
-   - **Option 1: From local chart directory**
      ```bash
-     helm install sentiment-app ./helm-chart-sentiment-app
-     ```
-   - **Option 2: From OCI registry (if you pushed the chart as in CI/CD)**
-     ```bash
-     helm registry login your.registry:5000
-     helm install sentiment-app oci://your.registry:5000/helm-charts/helm-chart-sentiment-app --version <chart_version>
+     helm upgrade --install sentiment-app ./helm-chart-sentiment-app -f values-secret.yaml
      ```
 
 5. **Monitor and manage your deployment**
@@ -126,6 +120,7 @@ TODO                      # Project plan and future roadmap
   make run-pytests-coverage-html
   ```
 - **Coverage report:**
+
   ![Tests coverage report](docs/img/tests-coverage-report.png)
 
 ## Monitoring & Observability
