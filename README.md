@@ -5,7 +5,7 @@
 This project is a hands-on DevOps/MLOps exercise focused on deploying a HuggingFace LoRA-based sentiment analysis model using best practices for productionization, CI/CD, security, monitoring, and scalable infrastructure on Kubernetes. The goal is to demonstrate a full ML product lifecycle, from model training to robust, observable, and secure deployment.
 
 ## Key Features
-- **Model**: Fine-tuned HuggingFace transformer (LoRA) for movie sentiment analysis
+- **Model**: Pretrained BERT model from HuggingFace, fine-tuned with LoRA for movie sentiment analysis
 - **API**: FastAPI backend for inference, metrics, and health endpoints
 - **UI**: Gradio frontend for interactive predictions
 - **Dependency Management**: Poetry for streamlined dependency resolution, virtual environment isolation, and reproducible builds
